@@ -4,7 +4,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 export default function MainLayout() {
   return (
-    <div style={{ backgroundColor: "cornflowerblue" }}>
+    <div>
       <Header />
       <Outlet />
       <Footer />

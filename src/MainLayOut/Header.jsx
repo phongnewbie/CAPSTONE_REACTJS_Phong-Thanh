@@ -2,15 +2,11 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Header() {
-  let navigate = useNavigate();
-  let [newState, setState] = useState(0);
-  const [newStateOne, setState1] = React.useState();
-  const value = Boolean;
-  const handleClicking = (event) => {
-    setState1();
-  };
   return (
-    <div className="d-flex justify-between">
+    <div
+      className="d-flex justify-between"
+      style={{ backgroundColor: "cornflowerblue" }}
+    >
       <nav className=" container navbar navbar-expand-lg  ">
         <NavLink to="../TrangChuMovie/TrangChu.jsx" className="justify">
           {" "}
@@ -33,7 +29,7 @@ export default function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active ">
+            <li className="nav-item active ms-2">
               <NavLink
                 className="nav-link text-danger font-weight-bolder "
                 to="/trangchu"

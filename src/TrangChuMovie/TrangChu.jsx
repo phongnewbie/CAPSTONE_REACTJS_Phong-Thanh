@@ -42,9 +42,5 @@ export default function TrangChu() {
   let isLogin = localStorage.getItem(USER_LOGIN);
   const [listPhim, setDSphim] = useState([]);
   let listFilm = useSelector((state) => state.da);
-  return (
-    <div>
-      <h1>hi</h1>
-    </div>
-  );
+  return <div></div>;
 }
