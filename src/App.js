@@ -4,11 +4,18 @@ import TrangChu from './TrangChuMovie/TrangChu';
 import Header from './Header/Header';
 import "bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter, Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
-import history from "./utils/history"
+import {history} from "./utils/history"
+import MainPage from './MainLayOut/MainPage'
 function App() {
   return (
     <div className="App">
-      <TrangChu/>
+       <HistoryRouter history={history} >
+      <Routes>
+        <Route path='/' element={<MainPage/>}>
+          <Route path='/trangchu' element={<TrangChu/>}/>
+          </Route>
+      </Routes>
+      </HistoryRouter>
     </div>
   );
 }

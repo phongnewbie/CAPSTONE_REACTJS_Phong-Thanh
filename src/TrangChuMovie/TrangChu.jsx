@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import axios from "axios";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import useRoute from "../hooks/useRoute";
 import { Result } from "antd";
@@ -43,34 +43,8 @@ export default function TrangChu() {
   const [listPhim, setDSphim] = useState([]);
   let listFilm = useSelector((state) => state.da);
   return (
-    <div class="dropdown">
-      <a
-        class="btn btn-secondary dropdown-toggle"
-        href="#"
-        role="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Dropdown link
-      </a>
-
-      <ul class="dropdown-menu">
-        <li>
-          <a class="dropdown-item" href="#">
-            Action
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#">
-            Another action
-          </a>
-        </li>
-        <li>
-          <a class="dropdown-item" href="#">
-            Something else here
-          </a>
-        </li>
-      </ul>
+    <div>
+      <h1>hi</h1>
     </div>
   );
 }

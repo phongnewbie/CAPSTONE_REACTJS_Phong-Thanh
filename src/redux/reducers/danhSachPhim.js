@@ -8,7 +8,7 @@ const danhSachPhim = createSlice({
     name: sliceName,
     initialState,
     reducers: {
-    
+        Token:``
     }
 });
 
