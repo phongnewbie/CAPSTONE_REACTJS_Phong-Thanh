@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 export default function Footer() {
   return (
-    <div className="container pt-4" style={{ backgroundColor: "gray" }}>
+    <div className="container" style={{ backgroundColor: "gray" }}>
       <div className="footer_Film">
         <div className="content_Film d-flex">
           <div className="cinema_vietnam">
@@ -109,7 +109,7 @@ export default function Footer() {
           <div className="customer-cgv">
             <h3>Chăm sóc khách hàng</h3>
             <p>
-              Hotline: 1900 6017 Giờ làm việc: 8:00 - 22:00
+              Hotline: 1900 0000 Giờ làm việc: 8:00 - 22:00
               <br /> (Tất cả các ngày bao gồm cả Lễ Tết)
               <br />
               Email hỗ trợ:{" "}
