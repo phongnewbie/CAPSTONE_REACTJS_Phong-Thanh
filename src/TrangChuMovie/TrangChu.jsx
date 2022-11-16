@@ -6,48 +6,29 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import useRoute from "../hooks/useRoute";
 import { Result } from "antd";
 import moment from "moment/moment";
-import { gettingDanhSachFilm } from "../redux/reducers/PhimReducer";
+import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
+import { callDanhSachBanner } from "../redux/reducers/bannerReducer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { USER_LOGIN } from "../utils/constant";
-
 import { getStringLocal } from "../utils/config";
 let timeOut = null;
 const allContentWidth = {
   width: "1000px",
 };
 export default function TrangChu() {
-  // const {
-  //   params,
-  //   navigate,
-  //   searchParams: [searchParams, setSearchParams],
-  // } = useRoute();
-  // //const keyWord = searchParams.has("word") ? searchParams.get("word") : "";
-
-  // const getApi = async () => {
-  //   try {
-  //     const apiFilm = await axios({
-  //       method: "GET",
-  //       data: "https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP01",
-  //     });
-  //     dispatch(getApi(apiFilm));
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // if (timeOut != null) {
-  //   clearTimeout(timeOut);
-  // }
   const LoginInfo = getStringLocal(USER_LOGIN);
   const [dataRap, setDataRap] = useState([]);
   const [dataLichChieu, setLichChieu] = useState([]);
-  const [dataThongTinLichChieu, setDataThongTinLichChieu] = useState([]);
+
   let dispatch = useDispatch();
-  const params = useSearchParams();
   const navigate = useNavigate();
   let timeout = null;
-const apiBanner = useSelector((state)=> state.danhSachPhimOne.danhSachPhim)
+  let apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
   let isLogin = localStorage.getItem(USER_LOGIN);
   const [listPhim, setDSphim] = useState([]);
+  if (timeout != null) {
+    clearTimeout(timeout);
+  }
   const layLichChieuFilm = async (maFilm) => {
     try {
       await axios({
@@ -66,7 +47,8 @@ const apiBanner = useSelector((state)=> state.danhSachPhimOne.danhSachPhim)
   };
   useEffect(() => {
     timeOut = setTimeout(() => {
-      dispatch(layDanhSachFilm);
+      dispatch(callApiDanhSachPhim);
+      dispatch(callDanhSachBanner);
       axios({
         method: "GET",
         url: `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinHeThongRap`,
@@ -79,11 +61,25 @@ const apiBanner = useSelector((state)=> state.danhSachPhimOne.danhSachPhim)
       });
     }, 1000);
   }, []);
-  return <div>
-    {isLogin?(
-      <div className="carousel-main">
-        {banner.filter()}
+  return (
+    <div className="container">
+      <h1>CGV</h1>
+
+      <div className="row">
+        {apiBanner.map((item, index) => {
+          return (
+            <div className="col-sm-3 pt-4">
+              <div className="card">
+                <img src={item.image} alt="" />
+                <div className="card-body">
+                  <h5 className="card-title">{item.name}</h5>
+                  <p className="card-text">{item.shortDescription}</p>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    )}
-  </div>;
+    </div>
+  );
 }

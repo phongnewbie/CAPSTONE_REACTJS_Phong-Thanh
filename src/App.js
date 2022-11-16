@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter, Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import {history} from "./utils/history"
 import MainPage from './MainLayOut/MainPage'
+import bannerReducer from './redux/reducers/bannerReducer';
 function App() {
   return (
     <div className="App">
