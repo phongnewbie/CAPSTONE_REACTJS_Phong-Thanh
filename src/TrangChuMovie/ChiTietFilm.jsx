@@ -10,7 +10,7 @@ export default function ChiTietFilm() {
   const getApiFilmChiTiet = async () => {
     const getApiFilm = await axios({
       method: "GET",
-      url: `https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?maPhim=${params.maPhim}`,
+      url: `https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim`,
       headers: {
         Token:
           "eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ",
