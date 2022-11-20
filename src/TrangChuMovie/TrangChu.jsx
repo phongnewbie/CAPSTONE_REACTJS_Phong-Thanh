@@ -22,11 +22,18 @@ export default function TrangChu() {
   const LoginInfo = getStringLocal(USER_LOGIN);
   const [dataRap, setDataRap] = useState([]);
   const [dataLichChieu, setLichChieu] = useState([]);
+<<<<<<< HEAD
   const 
   const navigate = useNavigate();
   let timeout = null;
   let apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
   let getDLFilm = useSelector((state) => state.PhimReducer.danhSachPhim);
+=======
+
+  const navigate = useNavigate();
+  let timeout = null;
+  const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
   let dispatch = useDispatch();
 
   const getApiBanner = async () => {
@@ -37,6 +44,7 @@ export default function TrangChu() {
     }
   };
 
+<<<<<<< HEAD
   const getApiPhim = async () => {
     try {
       dispatch(callApiDanhSachPhim());
@@ -45,6 +53,8 @@ export default function TrangChu() {
     }
   };
 
+=======
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
   if (timeout != null) {
     clearTimeout(timeout);
   }
@@ -52,7 +62,10 @@ export default function TrangChu() {
   useEffect(() => {
     timeout = setTimeout(() => {
       getApiBanner();
+<<<<<<< HEAD
       getApiPhim();
+=======
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
     }, 1000);
   }, []);
 
@@ -61,6 +74,7 @@ export default function TrangChu() {
   if (timeout != null) {
     clearTimeout(timeout);
   }
+<<<<<<< HEAD
   // const layLichChieuFilm = async (maFilm) => {
   //   try {
   //     await axios({
@@ -77,6 +91,24 @@ export default function TrangChu() {
   //     console.log(error);
   //   }
   // };
+=======
+  const layLichChieuFilm = async (maFilm) => {
+    try {
+      await axios({
+        method: "GET",
+        url: `https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maFilm=${maFilm}maNhom=GP03`,
+        headers: {
+          TokenCybersoft:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
+        },
+      }).then((result) => {
+        setLichChieu(result.data.content);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
   useEffect(() => {
     timeOut = setTimeout(() => {
       dispatch(callDanhSachBanner);
@@ -111,6 +143,7 @@ export default function TrangChu() {
   const renderBanner = () => {
     return apiBanner.map((item, index) => {
       return (
+<<<<<<< HEAD
         <div key={index} className="col-sm-3 pt-4 w-100 h">
           <div
             className="card"
@@ -119,11 +152,20 @@ export default function TrangChu() {
               backgroundImage: `url(${item.hinhAnh})`,
             }}
           ></div>
+=======
+        <div key={index}>
+          <div
+            style={{ ...contentStyle, backgroundImage: `url(${item.hinhAnh})` }}
+          >
+            <img className="w-100 opacity-0" />
+          </div>
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
         </div>
       );
     });
   };
 
+<<<<<<< HEAD
   // return (
   //   <div>
   //     <div className="bg-image">
@@ -142,6 +184,8 @@ export default function TrangChu() {
   //   </div>
   // );
 
+=======
+>>>>>>> c8472ea737a7e47415b3d004444ec21a55d469fe
   return <Carousel autoplay>{renderBanner()}</Carousel>;
 
   // return (
