@@ -1,32 +1,20 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect } from "react";
 import { Carousel } from "antd";
-import { Card, List } from "antd";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import useRoute from "../hooks/useRoute";
-import { Result } from "antd";
-import moment from "moment/moment";
-import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
 import { callDanhSachBanner } from "../redux/reducers/bannerReducer";
+import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
+import "./dsPhim.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { USER_LOGIN } from "../utils/constant";
-import { getStringLocal } from "../utils/config";
-import InfiniteScroll from "react-infinite-scroll-component";
-import ListBody from "antd/lib/transfer/ListBody";
-let timeOut = null;
-const allContentWidth = {
-  width: "1000px",
-};
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import styleSlick from "./multipleRowSlick.css";
 
 export default function TrangChu() {
-  const LoginInfo = getStringLocal(USER_LOGIN);
-  const [dataRap, setDataRap] = useState([]);
-  const [dataLichChieu, setLichChieu] = useState([]);
-  const navigate = useNavigate();
   let timeout = null;
-  let apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
-  let getDLFilm = useSelector((state) => state.PhimReducer.danhSachPhim);
+  const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
+  const apiDsPhim = useSelector((state) => state.PhimReducer.danhSachPhim);
+
   let dispatch = useDispatch();
 
   const getApiBanner = async () => {
@@ -56,48 +44,6 @@ export default function TrangChu() {
     }, 1000);
   }, []);
 
-  let isLogin = localStorage.getItem(USER_LOGIN);
-  const [listPhim, setDSphim] = useState([]);
-  if (timeout != null) {
-    clearTimeout(timeout);
-  }
-  const layLichChieuFilm = async (maFilm) => {
-    try {
-      await axios({
-        method: "GET",
-        url: `https:movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maFilm=${maFilm}maNhom=GP03`,
-        headers: {
-          TokenCybersoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-        },
-      }).then((result) => {
-        setLichChieu(result.data.content);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    timeOut = setTimeout(() => {
-      dispatch(callDanhSachBanner);
-      dispatch(callApiDanhSachPhim);
-      axios({
-        method: "GET",
-        url: `https://movienew.cybersoft.edu.vn/api/QuanLyPhim`,
-        headers: {
-          TokenCybersoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-        },
-      }).then((result) => {
-        setDataRap(result.data.content);
-      });
-    }, 1000);
-  }, []);
-
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
-  };
-
   const contentStyle = {
     height: "600px",
     color: "#fff",
@@ -111,7 +57,7 @@ export default function TrangChu() {
   const renderBanner = () => {
     return apiBanner.map((item, index) => {
       return (
-        <div key={index} className="col-sm-3 pt-4 w-100 h">
+        <div key={index} className="w-100">
           <div
             className="card"
             style={{
@@ -124,27 +70,75 @@ export default function TrangChu() {
     });
   };
 
-  return <Carousel autoplay>{renderBanner()}</Carousel>;
+  const renderDsPhim = () => {
+    return apiDsPhim.map((item, index) => {
+      return (
+        <div key={index} className="mt-5">
+          <div className="phim_warp">
+            <img
+              // width={210}
+              height={300}
+              src={item.hinhAnh}
+              className="card-img-top"
+              alt="..."
+            />
+            <div className="card-body">
+              <h5 className="card-title phim_name">{item.tenPhim}</h5>
+              <p className="phim_mota">{item.moTa}</p>
+              <button className="phim_muave btn_muave btn--primary">
+                Mua vé
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
 
-  // return (
-  //   <div className="container">
-  //     <h1>CGV</h1>
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={`${className} ${styleSlick["slick-prev"]}`}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
 
-  //     <div className="row">
-  //       {apiBanner.map((item, index) => {
-  //         return (
-  //           <div className="col-sm-3 pt-4">
-  //             <div className="card">
-  //               <img src={item.hinhAnh} alt="" />
-  //               <div className="card-body">
-  //                 {/* <h5 className="card-title">{item.name}</h5> */}
-  //                 {/* <p className="card-text">{item.shortDescription}</p> */}
-  //               </div>
-  //             </div>
-  //           </div>
-  //         );
-  //       })}
-  //     </div>
-  //   </div>
-  // );
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={`${className} ${styleSlick["slick-prev"]}`}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "60px",
+    slidesToShow: 4,
+    speed: 500,
+    rows: 2,
+    slidesPerRow: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
+  return (
+    <div style={{ backgroundColor: "#fff" }}>
+      <Carousel autoplay>{renderBanner()}</Carousel>
+      <div className="slick-dsphim">
+        <Slider {...settings}>{renderDsPhim()}</Slider>
+      </div>
+      <div className="container mt-5">
+        {/* <div className="row">{renderDsPhim()}</div> */}
+      </div>
+    </div>
+  );
 }

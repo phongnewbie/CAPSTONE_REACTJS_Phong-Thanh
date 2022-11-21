@@ -74,6 +74,18 @@ export default function Header() {
                 Dịch vụ
               </NavLink>
             </li>
+            <li className="nav-item active ">
+              <NavLink className="nav-link text-white" to="/signup">
+                {" "}
+                SignUp{" "}
+              </NavLink>
+            </li>
+            <li className="nav-item active ">
+              <NavLink className="nav-link text-white" to="/login">
+                {" "}
+                LogIn{" "}
+              </NavLink>
+            </li>
           </ul>
         </div>
       </nav>

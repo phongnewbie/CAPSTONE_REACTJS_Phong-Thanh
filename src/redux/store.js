@@ -3,11 +3,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import rootReducer from "./reducers/rootReducer";
 import bannerReducer from "./reducers/bannerReducer";
 import PhimReducer from "./reducers/PhimReducer";
+import userReducer from "./reducers/userReducer";
 export const store = configureStore({
   reducer: {
     rootReducer,
     bannerReducer,
     PhimReducer,
+    userReducer,
   },
 });
 
