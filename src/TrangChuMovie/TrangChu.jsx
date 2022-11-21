@@ -73,7 +73,7 @@ export default function TrangChu() {
   const renderDsPhim = () => {
     return apiDsPhim.map((item, index) => {
       return (
-        <div key={index} className="mt-5">
+        <div key={index} className="mt-3">
           <div className="phim_warp">
             <img
               // width={210}
