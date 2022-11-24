@@ -1,40 +1,60 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
-import axios from "axios";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import useRoute from "../hooks/useRoute";
-import { Result } from "antd";
-import moment from "moment/moment";
-import {
-  callApiDanhSachPhim,
-  layDanhSachFilm,
-} from "../redux/reducers/PhimReducer";
 import { callDanhSachBanner } from "../redux/reducers/bannerReducer";
+import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
+import { getFilmDataList } from "../redux/reducers/RapChieuPhim";
+import "./dsPhim.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { USER_LOGIN } from "../utils/constant";
-import { getStringLocal } from "../utils/config";
-import InfiniteScroll from "react-infinite-scroll-component";
-import ListBody from "antd/lib/transfer/ListBody";
-import Button from "react-bootstrap/Button";
-let timeOut = null;
-const allContentWidth = {
-  width: "1000px",
-};
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
+import styleSlick from "./multipleRowSlick.css";
+
 export default function TrangChu() {
-  const LoginInfo = getStringLocal(USER_LOGIN);
-  const [dataRap, setDataRap] = useState([]);
-  const [dataLichChieu, setLichChieu] = useState([]);
-  const navigate = useNavigate();
   let timeout = null;
-  let apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
-  let getDLFilm = useSelector((state) => state.PhimReducer.danhSachPhim);
+  const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
+  const apiDsPhim = useSelector((state) => state.PhimReducer.danhSachPhim);
+  const apiFilm = useSelector((state) => state.rapChieuPhim.dataRap);
+  const [dataRap, SetDataRap] = useState([]);
+  const [dataLichChieu, setLichChieu] = useState([]);
   let dispatch = useDispatch();
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
+
+  const getApiBanner = async () => {
+    try {
+      dispatch(callDanhSachBanner());
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  const getApiPhim = async () => {
+    try {
+      dispatch(callApiDanhSachPhim());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getDsFilm = async () => {
+    try {
+      dispatch(getFilmDataList());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (timeout != null) {
+    clearTimeout(timeout);
+  }
+
+  useEffect(() => {
+    timeout = setTimeout(() => {
+      getApiBanner();
+      getApiPhim();
+      getDsFilm();
+    }, 1000);
+  }, []);
+
   const contentStyle = {
     height: "600px",
     color: "#fff",
@@ -44,65 +64,15 @@ export default function TrangChu() {
     backgroundSize: "100%",
     backgroundRepeat: "no-repeat",
   };
-  const getApiBanner = async () => {
-    try {
-      dispatch(callDanhSachBanner());
-    } catch (err) {
-      console.log(err);
-    }
+  const dataFilm = {
+    height: "200px",
+    width: "200px",
   };
-  const getApiPhim = async () => {
-    try {
-      dispatch(callApiDanhSachPhim());
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  if (timeout != null) {
-    clearTimeout(timeout);
-  }
-  useEffect(() => {
-    timeout = setTimeout(() => {
-      getApiBanner();
-      getApiPhim();
-    }, 1000);
-  }, []);
-  let isLogin = localStorage.getItem(USER_LOGIN);
-  const [listPhim, setDSphim] = useState([]);
-  if (timeout != null) {
-    clearTimeout(timeout);
-  }
-  const layLichChieuFilm = async (maFilm) => {
-    const getFilm = await axios({
-      method: "GET",
-      url: `https:movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maFilm=${maFilm}maNhom=GP03`,
-      headers: {
-        TokenCybersoft:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-      },
-    });
-    setDSphim(getFilm.data.content);
-  };
-  useEffect(() => {
-    timeOut = setTimeout(() => {
-      dispatch(callDanhSachBanner);
-      dispatch(layLichChieuFilm);
-      axios({
-        method: "GET",
-        url: `https://movienew.cybersoft.edu.vn/api/QuanLyPhim`,
-        headers: {
-          TokenCybersoft:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-        },
-      }).then((result) => {
-        setDataRap(result.data.content);
-      });
-    }, 1000);
-  }, []);
+
   const renderBanner = () => {
     return apiBanner.map((item, index) => {
       return (
-        <div key={index} className="col-sm-3 pt-4 w-100 h">
+        <div key={index} className="w-100">
           <div
             className="card"
             style={{
@@ -114,48 +84,86 @@ export default function TrangChu() {
       );
     });
   };
+
+  const renderDsPhim = () => {
+    return apiDsPhim.map((item, index) => {
+      return (
+        <div key={index} className="mt-3">
+          <div className="phim_warp">
+            <img
+              // width={210}
+              height={300}
+              src={item.hinhAnh}
+              className="card-img-top"
+              alt="..."
+            />
+            <div className="card-body">
+              <h5 className="card-title phim_name">{item.tenPhim}</h5>
+              <p className="phim_mota">{item.moTa}</p>
+              <button className="phim_muave btn_muave btn--primary">
+                Mua vé
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+
+  const renderCinemaInfo = (item) => {
+    return apiFilm.map((item, index) => {
+      return (
+        <div key={index}>
+          <img src={item.logo} />
+        </div>
+      );
+    });
+  };
+
+  function SampleNextArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={`${className} ${styleSlick["slick-prev"]}`}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  function SamplePrevArrow(props) {
+    const { className, style, onClick } = props;
+    return (
+      <div
+        className={`${className} ${styleSlick["slick-prev"]}`}
+        style={{ ...style, display: "block" }}
+        onClick={onClick}
+      />
+    );
+  }
+
+  const settings = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    centerPadding: "60px",
+    slidesToShow: 4,
+    speed: 500,
+    rows: 2,
+    slidesPerRow: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
+
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
-      <Card.Body>
-        <Card.Title></Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-      </Card.Body>
-      <ListGroup className="list-group-flush">
-        <ListGroup.Item>Cras justo odio</ListGroup.Item>
-        <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-        <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-      </ListGroup>
-      <Card.Body>
-        <Card.Link href="#">Card Link</Card.Link>
-        <Card.Link href="#">Another Link</Card.Link>
-      </Card.Body>
-    </Card>
+    <div style={{ backgroundColor: "#fff" }}>
+      <Carousel autoplay>{renderBanner()}</Carousel>
+      <div className="slick-dsphim">
+        <Slider {...settings}>{renderDsPhim()}</Slider>
+      </div>
+      <div className="container mt-5">
+        {/* <div className="row">{renderDsPhim()}</div> */}
+      </div>
+    </div>
   );
-  <Carousel autoplay>{renderBanner()}</Carousel>;
-
-  // return (
-  //   <div className="container">
-  //     <h1>CGV</h1>
-
-  //     <div className="row">
-  //       {apiBanner.map((item, index) => {
-  //         return (
-  //           <div className="col-sm-3 pt-4">
-  //             <div className="card">
-  //               <img src={item.hinhAnh} alt="" />
-  //               <div className="card-body">
-  //                 {/* <h5 className="card-title">{item.name}</h5> */}
-  //                 {/* <p className="card-text">{item.shortDescription}</p> */}
-  //               </div>
-  //             </div>
-  //           </div>
-  //         );
-  //       })}
-  //     </div>
-  //   </div>
-  // );
 }
