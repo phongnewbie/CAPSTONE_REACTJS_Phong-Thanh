@@ -3,22 +3,49 @@ import { Carousel } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { callDanhSachBanner } from "../redux/reducers/bannerReducer";
 import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
-import { getFilmDataList } from "../redux/reducers/RapChieuPhim";
+import { getFilmDataList } from "../redux/reducers/rapChieuPhim";
 import "./dsPhim.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styleSlick from "./multipleRowSlick.css";
+import { Box } from "@mui/material";
+import { List } from "@mui/material";
+import { styled } from "@mui/material";
+import { ListItem } from "@mui/material";
+import { ListItemAvatar } from "@mui/material";
+import { ListItemIcon } from "@mui/material";
+import { ListItemText } from "@mui/material";
+import { Grid } from "@mui/material";
+import { FormGroup } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
+import { Checkbox } from "@mui/material";
+import { event } from "jquery";
+import { Avatar } from "@mui/material";
+import { Button } from "@mui/material";
 
+import { Typography } from "@mui/material";
+function generate(element) {
+  return [0, 1, 2].map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    })
+  );
+}
+const Demo = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
 export default function TrangChu() {
   let timeout = null;
   const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
   const apiDsPhim = useSelector((state) => state.PhimReducer.danhSachPhim);
   const apiFilm = useSelector((state) => state.rapChieuPhim.dataRap);
-  const [dataRap, SetDataRap] = useState([]);
+  const [dataRapFilm, SetDataRap] = useState([]);
   const [dataLichChieu, setLichChieu] = useState([]);
   let dispatch = useDispatch();
+  const [dense, setDense] = React.useState(false);
+  const [secondary, setSecondary] = React.useState(false);
 
   const getApiBanner = async () => {
     try {
@@ -37,7 +64,7 @@ export default function TrangChu() {
   };
   const getDsFilm = async () => {
     try {
-      dispatch(getFilmDataList());
+      dispatch(apiFilm);
     } catch (err) {
       console.log(err);
     }
@@ -119,7 +146,6 @@ export default function TrangChu() {
       );
     });
   };
-
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -162,7 +188,7 @@ export default function TrangChu() {
         <Slider {...settings}>{renderDsPhim()}</Slider>
       </div>
       <div className="container mt-5">
-        {/* <div className="row">{renderDsPhim()}</div> */}
+        <List>{renderCinemaInfo()}</List>
       </div>
     </div>
   );

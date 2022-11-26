@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   dsBannerFilm: [],
 };
+console.log(initialState.dsBannerFilm);
 const bannerReducer = createSlice({
   name: "bannerReducer",
   initialState,

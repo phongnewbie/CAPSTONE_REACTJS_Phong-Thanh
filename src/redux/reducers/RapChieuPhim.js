@@ -4,7 +4,9 @@ import { removeLocal } from '../../utils/config';
 import { USER_LOGIN } from '../../utils/constant';
 const initialState = {
   dataRap: [],
+  
 }
+console.log(initialState.dataRap);
 
 const rapChieuPhim = createSlice({
   name: "rapChieuPhim",
@@ -15,15 +17,17 @@ const rapChieuPhim = createSlice({
         state.dataRap = payload;
         }
       }
+      
   }
 });
+console.log(rapChieuPhim);
 
 export const {layDataFilm} =  rapChieuPhim.actions
 export default rapChieuPhim.reducer
 export const getFilmDataList =()=> async(dispatch)=>{
    const getFilmData =  await axios({
     method:"GET",
-    url: `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap`,
+    url: `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap`,
     headers:{
       TokenCybersoft:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I"

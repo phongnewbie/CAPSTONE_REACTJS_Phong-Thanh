@@ -4,12 +4,14 @@ import rootReducer from "./reducers/rootReducer";
 import bannerReducer from "./reducers/bannerReducer";
 import PhimReducer from "./reducers/PhimReducer";
 import userReducer from "./reducers/userReducer";
+import rapChieuPhim from "./reducers/rapChieuPhim";
 export const store = configureStore({
   reducer: {
     rootReducer,
     bannerReducer,
     PhimReducer,
     userReducer,
+    rapChieuPhim,
   },
 });
 
