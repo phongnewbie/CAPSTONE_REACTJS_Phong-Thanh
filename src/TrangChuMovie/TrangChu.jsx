@@ -10,32 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styleSlick from "./multipleRowSlick.css";
-import { Box } from "@mui/material";
-import { List } from "@mui/material";
-import { styled } from "@mui/material";
-import { ListItem } from "@mui/material";
-import { ListItemAvatar } from "@mui/material";
-import { ListItemIcon } from "@mui/material";
-import { ListItemText } from "@mui/material";
-import { Grid } from "@mui/material";
-import { FormGroup } from "@mui/material";
-import { FormControlLabel } from "@mui/material";
-import { Checkbox } from "@mui/material";
-import { event } from "jquery";
-import { Avatar } from "@mui/material";
-import { Button } from "@mui/material";
-
-import { Typography } from "@mui/material";
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
-const Demo = styled("div")(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-}));
+import { FixedSizeList as List } from "react-window";
 export default function TrangChu() {
   let timeout = null;
   const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
@@ -44,8 +19,6 @@ export default function TrangChu() {
   const [dataRapFilm, SetDataRap] = useState([]);
   const [dataLichChieu, setLichChieu] = useState([]);
   let dispatch = useDispatch();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(false);
 
   const getApiBanner = async () => {
     try {
@@ -64,7 +37,7 @@ export default function TrangChu() {
   };
   const getDsFilm = async () => {
     try {
-      dispatch(apiFilm);
+      dispatch(getFilmDataList());
     } catch (err) {
       console.log(err);
     }
@@ -137,11 +110,16 @@ export default function TrangChu() {
     });
   };
 
-  const renderCinemaInfo = (item) => {
+  const renderCinemaInfo = () => {
     return apiFilm.map((item, index) => {
       return (
         <div key={index}>
           <img src={item.logo} />
+
+          <div className="card-body">
+            <h1>{item.tenHeThongRap}</h1>
+            <h2>{item.biDanh}</h2>
+          </div>
         </div>
       );
     });
