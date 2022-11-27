@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { callDanhSachBanner } from "../redux/reducers/bannerReducer";
 import { callApiDanhSachPhim } from "../redux/reducers/PhimReducer";
 import { getFilmDataList } from "../redux/reducers/rapChieuPhim";
+import { callDsFillChieu } from "../redux/reducers/danhSachPhim";
 import "./dsPhim.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
@@ -11,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styleSlick from "./multipleRowSlick.css";
 import { FixedSizeList as List } from "react-window";
+import axios from "axios";
 export default function TrangChu() {
   let timeout = null;
   const apiBanner = useSelector((state) => state.bannerReducer.dsBannerFilm);
@@ -38,11 +40,18 @@ export default function TrangChu() {
   const getDsFilm = async () => {
     try {
       dispatch(getFilmDataList());
+      // dispatch(callDsFillChieu());
     } catch (err) {
       console.log(err);
     }
   };
-
+  const getdsFillChieu = async () => {
+    try {
+      dispatch(callDsFillChieu());
+    } catch (err) {
+      console.log(err);
+    }
+  };
   if (timeout != null) {
     clearTimeout(timeout);
   }
@@ -52,6 +61,7 @@ export default function TrangChu() {
       getApiBanner();
       getApiPhim();
       getDsFilm();
+      getdsFillChieu();
     }, 1000);
   }, []);
 
@@ -63,10 +73,6 @@ export default function TrangChu() {
     backgroundPosition: "center",
     backgroundSize: "100%",
     backgroundRepeat: "no-repeat",
-  };
-  const dataFilm = {
-    height: "200px",
-    width: "200px",
   };
 
   const renderBanner = () => {
@@ -113,17 +119,20 @@ export default function TrangChu() {
   const renderCinemaInfo = () => {
     return apiFilm.map((item, index) => {
       return (
-        <div key={index}>
-          <img src={item.logo} />
+        <div key={index} className="w-25" style={{ marginRight: "250px" }}>
+          <div>
+            <img src={item.logo} className="w-25" />
 
-          <div className="card-body">
-            <h1>{item.tenHeThongRap}</h1>
-            <h2>{item.biDanh}</h2>
+            <div className="card-body">
+              <h1>{item.tenHeThongRap}</h1>
+              <h2>{item.biDanh}</h2>
+            </div>
           </div>
         </div>
       );
     });
   };
+
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
@@ -165,9 +174,7 @@ export default function TrangChu() {
       <div className="slick-dsphim">
         <Slider {...settings}>{renderDsPhim()}</Slider>
       </div>
-      <div className="container mt-5">
-        <List>{renderCinemaInfo()}</List>
-      </div>
+      <div className="container mt-5">{renderCinemaInfo()}</div>
     </div>
   );
 }

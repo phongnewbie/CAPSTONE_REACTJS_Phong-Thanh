@@ -5,6 +5,7 @@ import bannerReducer from "./reducers/bannerReducer";
 import PhimReducer from "./reducers/PhimReducer";
 import userReducer from "./reducers/userReducer";
 import rapChieuPhim from "./reducers/rapChieuPhim";
+import danhSachPhim from "./reducers/danhSachPhim";
 export const store = configureStore({
   reducer: {
     rootReducer,
@@ -12,6 +13,7 @@ export const store = configureStore({
     PhimReducer,
     userReducer,
     rapChieuPhim,
+    danhSachPhim,
   },
 });
 
