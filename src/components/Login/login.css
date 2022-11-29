@@ -1,0 +1,7 @@
+.login-warp {
+  box-shadow: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 40%);
+  padding: 20px 0;
+  width: 700px;
+  border-radius: 6px;
+  margin: auto;
+}

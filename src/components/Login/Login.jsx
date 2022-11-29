@@ -5,7 +5,7 @@ import { saveStringLocal } from "../../utils/config";
 import { useDispatch } from "react-redux";
 import { callLogin } from "../../redux/reducers/userReducer";
 import { USER_LOGIN } from "../../utils/constant";
-import axios from "axios";
+import "./login.css";
 
 export default function Login() {
   const {
@@ -54,57 +54,62 @@ export default function Login() {
           Logout
         </button>
       ) : (
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 8,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Tài khoản"
-            name="taiKhoan"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập tài khoản!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+        <div style={{ marginTop: "100px" }}>
+          <h2 className="text-center mb-5">Đăng nhập</h2>
+          <div className="login-warp">
+            <Form
+              name="basic"
+              labelCol={{
+                span: 8,
+              }}
+              wrapperCol={{
+                span: 8,
+              }}
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              autoComplete="off"
+            >
+              <Form.Item
+                label="Tài khoản"
+                name="taiKhoan"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy nhập tài khoản!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
 
-          <Form.Item
-            label="Mật khẩu"
-            name="matKhau"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập mật khẩu khẩu!",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
+              <Form.Item
+                label="Mật khẩu"
+                name="matKhau"
+                rules={[
+                  {
+                    required: true,
+                    message: "Hãy nhập mật khẩu khẩu!",
+                  },
+                ]}
+              >
+                <Input.Password />
+              </Form.Item>
 
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 8,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Đăng nhập
-            </Button>
-          </Form.Item>
-        </Form>
+              <Form.Item
+                wrapperCol={{
+                  offset: 8,
+                  span: 8,
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Đăng nhập
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>
       )}
     </div>
   );

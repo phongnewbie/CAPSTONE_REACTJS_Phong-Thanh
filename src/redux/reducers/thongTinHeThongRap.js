@@ -3,34 +3,33 @@ import axios from "axios";
 import { removeLocal } from "../../utils/config";
 import { USER_LOGIN } from "../../utils/constant";
 const initialState = {
-  dataRap: [],
+  dataCumRap: [],
 };
-console.log(initialState.dataRap);
+console.log(initialState.dataCumRap);
 
-const rapChieuPhim = createSlice({
-  name: "rapChieuPhim",
+const cumRapChieuPhim = createSlice({
+  name: "cumRapChieuPhim",
   initialState,
   reducers: {
     layDataFilm: (state, { type, payload }) => {
       {
-        state.dataRap = payload;
+        state.dataCumRap = payload;
       }
     },
   },
 });
-console.log(rapChieuPhim);
 
-export const { layDataFilm } = rapChieuPhim.actions;
-export default rapChieuPhim.reducer;
-export const getFilmDataList = () => async (dispatch) => {
-  const getFilmData = await axios({
+export const { layDataFilm } = cumRapChieuPhim.actions;
+export default cumRapChieuPhim.reducer;
+export const getCumRapPhim = () => async (dispatch) => {
+  const getCumRap = await axios({
     method: "GET",
-    url: `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinHeThongRap`,
+    url: `https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=GP01`,
     headers: {
       TokenCybersoft:
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
     },
   });
-  console.log(getFilmData.data.content);
-  dispatch(layDataFilm(getFilmData.data.content));
+  console.log("cumRap", getCumRap.data.content);
+  dispatch(layDataFilm(getCumRap.data.content));
 };

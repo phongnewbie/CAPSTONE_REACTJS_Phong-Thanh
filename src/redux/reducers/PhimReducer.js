@@ -14,6 +14,7 @@ const phimReducer = createSlice({
     },
   },
 });
+
 export const { layDanhSachFilm } = phimReducer.actions;
 export default phimReducer.reducer;
 export const callApiDanhSachPhim = () => async (dispatch) => {

@@ -1,0 +1,36 @@
+.img-movie {
+  border-radius: 4px;
+}
+
+.img-logo {
+  margin-left: -18px;
+}
+
+.btn-lichChieu {
+  padding: 10px 20px;
+  border: 1px solid #6495ed;
+  outline: none;
+  margin: 0 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  background-color: #6495ed;
+}
+
+.btn-lichChieu:hover {
+  background-color: #fff;
+  color: #6495ed;
+}
+
+.w-full {
+  width: 100%;
+  margin-left: 6px;
+}
+
+.lichChieu-warp {
+  box-shadow: 0 0.0625rem 0.125rem 0 rgb(0 0 0 / 40%);
+  padding: 10px;
+  padding-top: 20px;
+  padding-right: 40px;
+  border-radius: 6px;
+}

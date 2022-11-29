@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import "./header.css";
 
 export default function Header() {
   return (
-    <div
-      className="d-flex justify-between"
-      style={{ backgroundColor: "cornflowerblue" }}
-    >
+    <div className="d-flex justify-between header-nav">
       <nav className=" container navbar navbar-expand-lg  ">
-        <NavLink to="../TrangChuMovie/TrangChu.jsx" className="justify">
+        <NavLink to="/" className="justify">
           {" "}
           <img
             width={50}
@@ -16,28 +14,9 @@ export default function Header() {
             alt=""
           />{" "}
         </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon" />
-        </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item active ms-2">
-              <NavLink
-                className="nav-link text-danger font-weight-bolder "
-                to="/trangchu"
-              >
-                {" "}
-                Trang chủ{" "}
-              </NavLink>
-            </li>
             <li className="nav-item active ">
               <NavLink
                 className="nav-link text-danger font-weight-bolder"
@@ -56,24 +35,8 @@ export default function Header() {
                 Phim sắp chiếu
               </NavLink>
             </li>
-            <li className="nav-item active ">
-              <NavLink
-                className="nav-link text-danger font-weight-bolder"
-                to="/"
-              >
-                {" "}
-                Liên hệ
-              </NavLink>
-            </li>
-            <li className="nav-item active ">
-              <NavLink
-                className="nav-link text-danger font-weight-bolder"
-                to="/"
-              >
-                {" "}
-                Dịch vụ
-              </NavLink>
-            </li>
+          </ul>
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item active ">
               <NavLink className="nav-link text-white" to="/signup">
                 {" "}
