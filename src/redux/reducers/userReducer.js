@@ -58,7 +58,7 @@ export const callLogin = (userLogin) => async (dispatch) => {
 
     saveStringLocal(USER_LOGIN, apiLogin.data.content.accessToken);
 
-    history.push("/trangchu");
+    history.push("/");
   } catch (err) {
     return new Promise((resolve, reject) =>
       resolve({ isError: true, message: err.response.data.content })

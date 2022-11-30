@@ -18,7 +18,6 @@ const rapChieuPhim = createSlice({
     },
   },
 });
-console.log(rapChieuPhim);
 
 export const { layDataFilm } = rapChieuPhim.actions;
 export default rapChieuPhim.reducer;

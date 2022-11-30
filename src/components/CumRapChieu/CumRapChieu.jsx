@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFilmDataList } from "../../redux/reducers/RapChieuPhim";
 import { getCumRapPhim } from "../../redux/reducers/thongTinHeThongRap";
 import "./cumRap.css";
+import { history } from "../../utils/history";
 
 export default function CumRapChieu() {
   let timeout = null;
@@ -36,7 +37,7 @@ export default function CumRapChieu() {
   }, []);
 
   return (
-    <div className="container mt-5 cumRap-layOut">
+    <div className="container mt-5 cumRap-layOut cumRap-ove">
       {" "}
       <Tabs
         tabPosition={"left"}
@@ -80,8 +81,18 @@ export default function CumRapChieu() {
                                     {listPhim.lstLichChieuTheoPhim?.map(
                                       (lichChieu, index) => {
                                         return (
-                                          <div className="col-4 mb-2">
-                                            <button className="cumRap-btn">
+                                          <div
+                                            key={index}
+                                            className="col-4 mb-2"
+                                          >
+                                            <button
+                                              className="cumRap-btn"
+                                              onClick={() => {
+                                                history.push(
+                                                  `/checkout/${lichChieu.maLichChieu}`
+                                                );
+                                              }}
+                                            >
                                               {moment(
                                                 lichChieu.ngayChieuGioChieu
                                               ).format("DD/MM/YY - HH:MM A")}

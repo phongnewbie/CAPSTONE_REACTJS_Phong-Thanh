@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./footer.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getFilmDataList } from "../redux/reducers/RapChieuPhim";
+import { getFilmDataList } from "../../redux/reducers/RapChieuPhim";
 
 export default function Footer() {
   let timeout = null;

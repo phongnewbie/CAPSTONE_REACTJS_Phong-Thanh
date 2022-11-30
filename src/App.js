@@ -16,6 +16,7 @@ import InfoUser from "./components/SignUp/InfoUser";
 import LayoutUser from "./templates/users/LayoutUser";
 import TrangChu from "./pages/TrangChu";
 import ChiTiepPhim from "./components/ChiTietPhim/ChiTiepPhim";
+import CheckOutTemplate from "./templates/checkout/CheckOutTemplate";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="info" element={<InfoUser />} />
           </Route>
+          <Route path="/checkout/:id" element={<CheckOutTemplate />}></Route>
         </Routes>
       </HistoryRouter>
     </div>

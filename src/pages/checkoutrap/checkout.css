@@ -1,0 +1,84 @@
+.screen {
+  display: block;
+  background: #dfdfdf;
+  padding: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 10px;
+  width: 80%;
+  margin: auto;
+  /* margin-left: 38px; */
+}
+
+.seats {
+  /* display: block; */
+  width: 35px;
+  height: 35px;
+  background: #dfdfdf;
+  margin: 7px;
+  cursor: pointer;
+  /* position: relative; */
+  box-sizing: border-box;
+  text-align: center;
+  /* vertical-align: middle; */
+  line-height: 35px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+.rowname {
+  cursor: default;
+  background: #727575;
+  margin-right: 14px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+}
+
+.seats-taken {
+  background: repeating-linear-gradient(
+    45deg,
+    hsla(0, 0%, 60%, 0.4),
+    hsla(0, 0%, 60%, 0.4) 10px,
+    hsla(0, 0%, 60%, 0.6) 0,
+    hsla(0, 0%, 60%, 0.6) 20px
+  );
+  color: transparent;
+  cursor: no-drop !important;
+}
+
+.card-info {
+  margin-bottom: 24px;
+  border-color: #edf2f9;
+  box-shadow: 0 0.75rem 1.5rem rgb(18 38 63 / 3%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #edf2f9;
+  border-radius: 0.5rem;
+  padding: 12px;
+}
+
+.gheDangChon {
+  background: rgb(109, 238, 109) !important;
+  /* border: 3px solid rgb(109, 238, 109); */
+  box-shadow: 1px 1px 1px 1px rgba(109, 238, 109, 0.6);
+}
+
+.gheVip {
+  background-color: rgb(255, 206, 61);
+}
+
+.infoGhe {
+  width: 80%;
+  margin: auto;
+}

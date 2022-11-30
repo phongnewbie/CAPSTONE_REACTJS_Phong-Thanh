@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./chiTietPhim.css";
 import { Radio, Space, Tabs } from "antd";
 import moment from "moment";
+import { history } from "../../utils/history";
 
 export default function ChiTiepPhim() {
   const params = useParams();
@@ -95,6 +96,11 @@ export default function ChiTiepPhim() {
                                               <button
                                                 key={index}
                                                 className="btn-lichChieu"
+                                                onClick={() => {
+                                                  history.push(
+                                                    `/checkout/${lichChieu.maLichChieu}`
+                                                  );
+                                                }}
                                               >
                                                 {moment(
                                                   lichChieu.ngayChieuGioChieu
