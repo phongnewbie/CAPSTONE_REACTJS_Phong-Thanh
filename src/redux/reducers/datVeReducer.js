@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { history } from "../../utils/history";
+import { displayLoading, hideLoading } from "./LoadingReducer";
+import { clearVe } from "./quanLyDatVeReducer";
 
 import { http } from "../../utils/baseUrl";
 
@@ -26,11 +28,16 @@ export default datVeReducer.reducer;
 
 export const callDatVe = (datVe) => async (dispatch) => {
   try {
+    dispatch(displayLoading());
     const apiDatVe = await http.post("/QuanLyDatVe/DatVe", datVe);
-    // dispatch(getDatVe(apiDatVe));
+    dispatch(getDatVe(apiDatVe));
     alert("Đặt vé thành công");
+    // await dispatch(initialState.thongTinDatVe.maLichChieu);
+    await dispatch(clearVe());
+    dispatch(hideLoading());
     history.push("/info");
   } catch (err) {
+    dispatch(hideLoading());
     console.log(err.response.data);
   }
 };

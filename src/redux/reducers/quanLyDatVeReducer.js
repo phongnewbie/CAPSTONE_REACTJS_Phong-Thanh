@@ -23,10 +23,13 @@ const quanLyDatVeReducer = createSlice({
 
       return { ...state, danhSachGheDangDat: dsGheDangDatUpdate };
     },
+    clearVe: (state, { type, payload }) => {
+      state.danhSachGheDangDat = [];
+    },
   },
 });
 
-export const { saveGhe } = quanLyDatVeReducer.actions;
+export const { saveGhe, clearVe } = quanLyDatVeReducer.actions;
 
 export default quanLyDatVeReducer.reducer;
 

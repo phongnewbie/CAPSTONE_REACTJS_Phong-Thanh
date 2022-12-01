@@ -17,11 +17,13 @@ import LayoutUser from "./templates/users/LayoutUser";
 import TrangChu from "./pages/TrangChu";
 import ChiTiepPhim from "./components/ChiTietPhim/ChiTiepPhim";
 import CheckOutTemplate from "./templates/checkout/CheckOutTemplate";
+import Loading from "./components/Loading/Loading";
 
 function App() {
   return (
     <div className="App">
       <HistoryRouter history={history}>
+        <Loading />
         <Routes>
           <Route path="/" element={<LayoutUser />}>
             <Route path="/" element={<TrangChu />} />

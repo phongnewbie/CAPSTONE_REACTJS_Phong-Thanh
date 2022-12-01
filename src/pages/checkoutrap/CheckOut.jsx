@@ -9,7 +9,7 @@ import axios from "axios";
 import { http } from "../../utils/baseUrl";
 import "./checkout.css";
 import { callDatVe } from "../../redux/reducers/datVeReducer";
-import { saveGhe } from "../../redux/reducers/quanLyDatVeReducer";
+import { saveGhe, clearVe } from "../../redux/reducers/quanLyDatVeReducer";
 
 export default function CheckOut() {
   let dispatch = useDispatch();
@@ -65,13 +65,7 @@ export default function CheckOut() {
       return (
         <Fragment key={index}>
           <button
-            onClick={() =>
-              // dispatch({
-              //   type: "DAT_GHE",
-              //   payload: ghe,
-              // })
-              dispatch(saveGhe(ghe))
-            }
+            onClick={() => dispatch(saveGhe(ghe))}
             disabled={ghe.daDat}
             className={`seats ${classGheVip} ${classGhaDaDat} ${cssGheDangDat} ${classGheBanDat} `}
           >
@@ -202,15 +196,11 @@ export default function CheckOut() {
                   maLichChieu: params.id,
                   danhSachVe: apiGheDaDat,
                 };
-
-                console.log("hihi", thanhToan);
-                // if(apiGheDaDat == "")
                 {
                   apiGheDaDat == ""
                     ? alert("vui lòng chọn ghế")
                     : dispatch(callDatVe(thanhToan));
                 }
-                // dispatch(callDatVe(thanhToan));
               }}
             >
               Đặt vé

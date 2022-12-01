@@ -7,6 +7,7 @@ import rapChieuPhim from "./reducers/RapChieuPhim";
 import thongTinHeThongRap from "./reducers/thongTinHeThongRap";
 import quanLyDatVeReducer from "./reducers/quanLyDatVeReducer";
 import datVeReducer from "./reducers/datVeReducer";
+import LoadingReducer from "./reducers/LoadingReducer";
 export const store = configureStore({
   reducer: {
     bannerReducer,
@@ -16,6 +17,7 @@ export const store = configureStore({
     thongTinHeThongRap,
     quanLyDatVeReducer,
     datVeReducer,
+    LoadingReducer,
   },
 });
 
