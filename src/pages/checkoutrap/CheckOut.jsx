@@ -6,7 +6,10 @@ import { USER_LOGIN } from "../../utils/constant";
 import { useParams, useNavigate } from "react-router-dom";
 import _ from "lodash";
 import axios from "axios";
+import { http } from "../../utils/baseUrl";
 import "./checkout.css";
+import { callDatVe } from "../../redux/reducers/datVeReducer";
+import { saveGhe } from "../../redux/reducers/quanLyDatVeReducer";
 
 export default function CheckOut() {
   let dispatch = useDispatch();
@@ -18,21 +21,21 @@ export default function CheckOut() {
     (state) => state.quanLyDatVeReducer.danhSachGheDangDat
   );
 
+  console.log(apiGheDaDat);
+
+  const apiDatVe = useSelector((state) => state.datVeReducer.thongTinDatVe);
+
   const params = useParams();
   const navigate = useNavigate();
 
   const [datVe, setDatVe] = useState({});
   const getApiChiTiet = async () => {
-    const apiChiTiet = await axios({
-      method: "GET",
-      url: `https://movienew.cybersoft.edu.vn/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${params.id}`,
-      headers: {
-        TokenCybersoft:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-      },
-    });
+    const apiChiTiet = await http.get(
+      `/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${params.id}`
+    );
+
     setDatVe(apiChiTiet.data.content);
-    console.log("đặt vé", apiChiTiet.data.content);
+    // console.log("đặt vé", apiChiTiet.data.content);
   };
 
   const { thongTinPhim, danhSachGhe } = datVe;
@@ -54,17 +57,23 @@ export default function CheckOut() {
 
       let classGheVip = ghe.loaiGhe == "Vip" ? "gheVip" : "";
       let classGhaDaDat = ghe.daDat == true ? "seats-taken" : "";
+      let classGheBanDat = "";
+      if (infoUser.taiKhoan == ghe.taiKhoanNguoiDat) {
+        classGheBanDat = "gheBanDat";
+      }
+
       return (
         <Fragment key={index}>
           <button
             onClick={() =>
-              dispatch({
-                type: "DAT_GHE",
-                payload: ghe,
-              })
+              // dispatch({
+              //   type: "DAT_GHE",
+              //   payload: ghe,
+              // })
+              dispatch(saveGhe(ghe))
             }
             disabled={ghe.daDat}
-            className={`seats ${classGheVip} ${classGhaDaDat} ${cssGheDangDat} `}
+            className={`seats ${classGheVip} ${classGhaDaDat} ${cssGheDangDat} ${classGheBanDat} `}
           >
             {ghe.stt}
           </button>
@@ -125,6 +134,15 @@ export default function CheckOut() {
                 Ghế Vip chưa được mua
               </p>
             </div>
+            <div className="col-6 row align-items-center ml-0">
+              <button
+                style={{ marginLeft: "100px" }}
+                className="seats seats-taken gheBanDat "
+              ></button>
+              <p style={{ marginBottom: "0", fontWeight: "500" }}>
+                Ghế bạn đã mua
+              </p>
+            </div>
           </div>
         </div>
         <div className="col-4">
@@ -177,6 +195,23 @@ export default function CheckOut() {
             <button
               style={{ width: "100%", fontSize: "20px" }}
               className=" btn btn-success"
+              onClick={() => {
+                const maLichChieu = apiDatVe;
+                const danhSachVe = apiDatVe;
+                const thanhToan = {
+                  maLichChieu: params.id,
+                  danhSachVe: apiGheDaDat,
+                };
+
+                console.log("hihi", thanhToan);
+                // if(apiGheDaDat == "")
+                {
+                  apiGheDaDat == ""
+                    ? alert("vui lòng chọn ghế")
+                    : dispatch(callDatVe(thanhToan));
+                }
+                // dispatch(callDatVe(thanhToan));
+              }}
             >
               Đặt vé
             </button>
@@ -186,3 +221,20 @@ export default function CheckOut() {
     </div>
   );
 }
+
+// import { Tabs } from "antd";
+
+// function CheckOut(props) {
+//   return (
+//     <div className="">
+//       <Tabs defaultActiveKey="1">
+//         <Tabs.TabPane tab="Chọn ghế thanh toán" key="1">
+//           <CheckOuttt {...props} />
+//         </Tabs.TabPane>
+//         <Tabs.TabPane tab="Kết quả đặt vé" key="2">
+//           Content of Tab Pane 2
+//         </Tabs.TabPane>
+//       </Tabs>
+//     </div>
+//   );
+// }

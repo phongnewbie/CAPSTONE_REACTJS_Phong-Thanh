@@ -5,7 +5,6 @@ import { USER_LOGIN } from "../../utils/constant";
 const initialState = {
   dataRap: [],
 };
-console.log(initialState.dataRap);
 
 const rapChieuPhim = createSlice({
   name: "rapChieuPhim",

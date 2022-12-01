@@ -30,7 +30,7 @@ export const callGetProfile = async (dispatch) => {
   try {
     const apiGetProfile = await http.post("/QuanLyNguoiDung/ThongTinTaiKhoan");
 
-    console.log(apiGetProfile.data.content);
+    // console.log("user", apiGetProfile.data.content);
     dispatch(getProfile(apiGetProfile.data.content));
   } catch (err) {
     //xóa localStorage
@@ -43,7 +43,7 @@ export const callSignUp = (userSignUp) => async (dispatch) => {
   try {
     const apiSignUp = await http.post("/QuanLyNguoiDung/DangKy", userSignUp);
 
-    console.log(apiSignUp);
+    // console.log(apiSignUp);
 
     // đẩy qua trang login
     history.push("/login");

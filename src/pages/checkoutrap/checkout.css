@@ -82,3 +82,8 @@
   width: 80%;
   margin: auto;
 }
+
+.gheBanDat {
+  background-color: rgb(100, 149, 237) !important;
+  box-shadow: 1px 1px 1px 1px rgba(100, 149, 237, 0.6);
+}

@@ -5,7 +5,7 @@ import axios from "axios";
 const initialState = {
   dsBannerFilm: [],
 };
-console.log(initialState.dsBannerFilm);
+// console.log(initialState.dsBannerFilm);
 const bannerReducer = createSlice({
   name: "bannerReducer",
   initialState,
@@ -29,6 +29,6 @@ export const callDanhSachBanner = () => async (dispatch) => {
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
     },
   });
-  console.log(recieveBannerApi.data.content);
+  // console.log(recieveBannerApi.data.content);
   dispatch(getDsBannerFilm(recieveBannerApi.data.content));
 };

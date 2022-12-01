@@ -5,7 +5,7 @@ import { USER_LOGIN } from "../../utils/constant";
 const initialState = {
   dataCumRap: [],
 };
-console.log(initialState.dataCumRap);
+// console.log(initialState.dataCumRap);
 
 const cumRapChieuPhim = createSlice({
   name: "cumRapChieuPhim",

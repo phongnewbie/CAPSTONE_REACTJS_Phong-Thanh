@@ -5,7 +5,8 @@ import PhimReducer from "./reducers/PhimReducer";
 import userReducer from "./reducers/userReducer";
 import rapChieuPhim from "./reducers/RapChieuPhim";
 import thongTinHeThongRap from "./reducers/thongTinHeThongRap";
-import { quanLyDatVeReducer } from "./reducers/quanLyDatVeReducer";
+import quanLyDatVeReducer from "./reducers/quanLyDatVeReducer";
+import datVeReducer from "./reducers/datVeReducer";
 export const store = configureStore({
   reducer: {
     bannerReducer,
@@ -14,6 +15,7 @@ export const store = configureStore({
     rapChieuPhim,
     thongTinHeThongRap,
     quanLyDatVeReducer,
+    datVeReducer,
   },
 });
 
