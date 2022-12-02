@@ -37,86 +37,93 @@ export default function CumRapChieu() {
   }, []);
 
   return (
-    <div className="container mt-5 cumRap-layOut cumRap-ove">
-      {" "}
-      <Tabs
-        tabPosition={"left"}
-        items={apiCumRap.map((item, i) => {
-          const id = String(i + 1);
-          return {
-            label: <img src={item.logo} width={50} />,
-            key: id,
-            children: (
-              <Tabs
-                tabPosition={"left"}
-                items={item.lstCumRap?.map((cumRap, i) => {
-                  const id = String(i + 1);
-                  return {
-                    label: (
-                      <div className="cumRap-warp">
-                        <h6>{cumRap.tenCumRap}</h6>
-                        <p className="cumRap-address">{cumRap.diaChi}</p>
-                      </div>
-                    ),
-                    key: id,
-                    children: (
-                      <div className="cumRap-ove">
-                        {cumRap.danhSachPhim?.map((listPhim, index) => {
-                          return (
-                            <Fragment key={index}>
-                              <div className="mb-3 row">
-                                <div className="col-2">
-                                  <img
-                                    className="img-fluid"
-                                    src={listPhim.hinhAnh}
-                                    width={100}
-                                    height={150}
-                                  />
-                                </div>
-                                <div className="col-10 row">
-                                  <div className="col-12">
-                                    <h6>{listPhim.tenPhim}</h6>
+    <div id="lichChieu" className="container mt-5 ">
+      <h2
+        style={{ padding: "5px 0 30px", color: "#6495ed" }}
+        className="text-center"
+      >
+        Lịch chiếu phim
+      </h2>
+      <div className="cumRap-layOut cumRap-ove">
+        <Tabs
+          tabPosition={"left"}
+          items={apiCumRap.map((item, i) => {
+            const id = String(i + 1);
+            return {
+              label: <img src={item.logo} width={50} />,
+              key: id,
+              children: (
+                <Tabs
+                  tabPosition={"left"}
+                  items={item.lstCumRap?.map((cumRap, i) => {
+                    const id = String(i + 1);
+                    return {
+                      label: (
+                        <div className="cumRap-warp">
+                          <h6>{cumRap.tenCumRap}</h6>
+                          <p className="cumRap-address">{cumRap.diaChi}</p>
+                        </div>
+                      ),
+                      key: id,
+                      children: (
+                        <div className="cumRap-ove">
+                          {cumRap.danhSachPhim?.map((listPhim, index) => {
+                            return (
+                              <Fragment key={index}>
+                                <div className="mb-3 row">
+                                  <div className="col-2">
+                                    <img
+                                      className="img-fluid"
+                                      src={listPhim.hinhAnh}
+                                      width={100}
+                                      height={150}
+                                    />
                                   </div>
-                                  <div className="col-12 row">
-                                    {listPhim.lstLichChieuTheoPhim?.map(
-                                      (lichChieu, index) => {
-                                        return (
-                                          <div
-                                            key={index}
-                                            className="col-4 mb-2"
-                                          >
-                                            <button
-                                              className="cumRap-btn"
-                                              onClick={() => {
-                                                history.push(
-                                                  `/checkout/${lichChieu.maLichChieu}`
-                                                );
-                                              }}
+                                  <div className="col-10 row">
+                                    <div className="col-12">
+                                      <h6>{listPhim.tenPhim}</h6>
+                                    </div>
+                                    <div className="col-12 row">
+                                      {listPhim.lstLichChieuTheoPhim?.map(
+                                        (lichChieu, index) => {
+                                          return (
+                                            <div
+                                              key={index}
+                                              className="col-4 mb-2"
                                             >
-                                              {moment(
-                                                lichChieu.ngayChieuGioChieu
-                                              ).format("DD/MM/YY - HH:MM A")}
-                                            </button>
-                                          </div>
-                                        );
-                                      }
-                                    )}
+                                              <button
+                                                className="cumRap-btn"
+                                                onClick={() => {
+                                                  history.push(
+                                                    `/checkout/${lichChieu.maLichChieu}`
+                                                  );
+                                                }}
+                                              >
+                                                {moment(
+                                                  lichChieu.ngayChieuGioChieu
+                                                ).format("DD/MM/YY - HH:MM A")}
+                                              </button>
+                                            </div>
+                                          );
+                                        }
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                              <hr />
-                            </Fragment>
-                          );
-                        })}
-                      </div>
-                    ),
-                  };
-                })}
-              />
-            ),
-          };
-        })}
-      />
+                                <hr />
+                              </Fragment>
+                            );
+                          })}
+                        </div>
+                      ),
+                    };
+                  })}
+                />
+              ),
+            };
+          })}
+        />
+      </div>
     </div>
   );
 }

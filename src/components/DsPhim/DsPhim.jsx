@@ -21,6 +21,8 @@ export default function DsPhim() {
     }
   };
 
+  console.log(apiDsPhim);
+
   if (timeout != null) {
     clearTimeout(timeout);
   }
@@ -31,35 +33,71 @@ export default function DsPhim() {
     }, 1000);
   }, []);
 
-  const renderDsPhim = () => {
+  const renderDsPhimSapChieu = () => {
     return apiDsPhim.map((item, index) => {
-      return (
-        <div key={index} className="mt-3 mb-3">
-          <div className="phim_warp">
-            <img
-              // width={210}
-              height={300}
-              src={item.hinhAnh}
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title phim_name">{item.tenPhim}</h5>
-              <p className="phim_mota">{item.moTa}</p>
-              <div className="btn_muave-warp">
-                <button
-                  onClick={() => {
-                    history.push(`/chitietphim/${item.maPhim}`);
-                  }}
-                  className="btn_muave btn--primary"
-                >
-                  Mua vé
-                </button>
+      if (item.dangChieu == false) {
+        return (
+          <div key={index} className="mt-3 mb-3">
+            <div className="phim_warp">
+              <img
+                // width={210}
+                height={300}
+                src={item.hinhAnh}
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title phim_name">{item.tenPhim}</h5>
+                <p className="phim_mota">{item.moTa}</p>
+                <div className="btn_muave-warp">
+                  <button
+                    onClick={() => {
+                      history.push(`/chitietphim/${item.maPhim}`);
+                    }}
+                    className="btn_muave btn--primary"
+                  >
+                    Mua vé
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        );
+      }
+    });
+  };
+
+  const renderDsPhimDangChieu = () => {
+    return apiDsPhim.map((item, index) => {
+      if (item.dangChieu == true) {
+        return (
+          <div key={index} className="mt-3 mb-3">
+            <div className="phim_warp">
+              <img
+                // width={210}
+                height={300}
+                src={item.hinhAnh}
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body phim-bg">
+                <h5 className="card-title phim_name">{item.tenPhim}</h5>
+                <p className="phim_mota">{item.moTa}</p>
+                <div className="btn_muave-warp">
+                  <button
+                    onClick={() => {
+                      history.push(`/chitietphim/${item.maPhim}`);
+                    }}
+                    className="btn_muave btn--primary"
+                  >
+                    Mua vé
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
     });
   };
 
@@ -92,15 +130,31 @@ export default function DsPhim() {
     centerPadding: "60px",
     slidesToShow: 4,
     speed: 500,
-    rows: 2,
+    rows: 1,
     slidesPerRow: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
 
   return (
-    <div className="slick-dsphim" style={{ backgroundColor: "#f5f5f5" }}>
-      <Slider {...settings}>{renderDsPhim()}</Slider>
+    <div className="slick-dsphim mt-5">
+      <div id="phimSapChieu">
+        <h2 style={{ color: "#6495ed" }} className="text-center">
+          Phim sắp chiếu
+        </h2>
+        <div className="signup-warp " style={{ backgroundColor: "#f5f5f5" }}>
+          <Slider {...settings}>{renderDsPhimSapChieu()}</Slider>
+        </div>
+      </div>
+
+      <div id="phimDangChieu">
+        <h2 style={{ color: "#6495ed" }} className="text-center mt-5">
+          Phim đang chiếu
+        </h2>
+        <div className="signup-warp ">
+          <Slider {...settings}>{renderDsPhimDangChieu()}</Slider>
+        </div>
+      </div>
     </div>
   );
 }

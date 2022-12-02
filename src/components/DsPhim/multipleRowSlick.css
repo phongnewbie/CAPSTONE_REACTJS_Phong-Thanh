@@ -5,5 +5,9 @@
 }
 
 .slick-prev {
-  left: -50px;
+  left: -55px;
+}
+
+.slick-next {
+  right: -30px;
 }
