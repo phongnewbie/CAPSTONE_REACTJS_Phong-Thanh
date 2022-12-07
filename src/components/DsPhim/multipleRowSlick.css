@@ -11,3 +11,7 @@
 .slick-next {
   right: -30px;
 }
+
+.slick-track {
+  width: 100%;
+}

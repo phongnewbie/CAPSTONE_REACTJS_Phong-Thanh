@@ -26,6 +26,7 @@ export default function ChiTiepPhim() {
 
   useEffect(() => {
     getApiChiTiet();
+    window.scrollTo(0, 0);
   }, [params.id]);
 
   const onChange = (key) => {

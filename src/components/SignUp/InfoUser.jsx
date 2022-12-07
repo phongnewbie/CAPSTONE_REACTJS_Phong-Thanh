@@ -11,7 +11,7 @@ import "./SignUp";
 export default function () {
   let dispatch = useDispatch();
   let infoUser = useSelector((state) => state.userReducer.infoUser);
-  console.log(infoUser);
+  // console.log(infoUser);
 
   let userLocalStorage = getStringLocal(USER_LOGIN);
 
@@ -43,15 +43,14 @@ export default function () {
                 <h4 className="card-title">Email: {infoUser.email}</h4>
                 <h4 className="card-title">Số điện thoại: {infoUser.soDT}</h4>
               </div>
-              <NavLink
+              {/* <NavLink
                 style={{ width: "100%" }}
                 className="text-right mr-5"
                 to="/update"
               >
                 {" "}
                 cập nhật thông tin tài khoản{" "}
-              </NavLink>
-
+              </NavLink> */}
               <div className="row w-full">
                 <div className="col-12">
                   <h4 style={{ padding: "15px" }}>Lịch sử đặt vé</h4>

@@ -1,8 +1,69 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { callGetProfile } from "../../redux/reducers/userReducer";
+import { USER_LOGIN } from "../../utils/constant";
+import { removeLocal } from "../../utils/config";
+
 import "./header.css";
+import _ from "lodash";
 
 export default function Header() {
+  let dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userReducer.infoUser);
+  const [srHeader, setSrHeader] = useState(1);
+  useEffect(() => {
+    dispatch(callGetProfile);
+  }, []);
+
+  const renderLogin = () => {
+    if (_.isEmpty(userLogin)) {
+      return (
+        <Fragment>
+          <li className="nav-item header__nav-item header__nav-item--prevent active ">
+            <NavLink className="nav-link header-link text-white" to="/signup">
+              {" "}
+              SignUp{" "}
+            </NavLink>
+          </li>
+          <li className="nav-item active ">
+            <NavLink className="nav-link header-link text-white" to="/login">
+              {" "}
+              LogIn{" "}
+            </NavLink>
+          </li>
+        </Fragment>
+      );
+    }
+    return (
+      <Fragment>
+        <li className="nav-item active ">
+          <NavLink
+            className="nav-link header__nav-item header__nav-item--prevent header-link text-white"
+            to="/info"
+          >
+            {" "}
+            Hi! {userLogin.hoTen}{" "}
+          </NavLink>
+        </li>
+        <li className="nav-item active ">
+          <NavLink
+            onClick={() => {
+              removeLocal(USER_LOGIN);
+              // window.location.reload();
+              setSrHeader(srHeader + 1);
+            }}
+            className="nav-link header-link text-white"
+            to="/login"
+          >
+            {" "}
+            Đăng xuất
+          </NavLink>
+        </li>
+      </Fragment>
+    );
+  };
+
   return (
     <div className="d-flex justify-between header-nav">
       <nav className=" container navbar navbar-expand-lg  ">
@@ -48,16 +109,8 @@ export default function Header() {
           </ul>
           <div>
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item active ">
-                <NavLink
-                  className="nav-link header-link text-white"
-                  to="/signup"
-                >
-                  {" "}
-                  SignUp{" "}
-                </NavLink>
-              </li>
-              <li className="nav-item active ">
+              {renderLogin()}
+              {/* <li className="nav-item active ">
                 <NavLink
                   className="nav-link header-link text-white"
                   to="/login"
@@ -65,7 +118,7 @@ export default function Header() {
                   {" "}
                   LogIn{" "}
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

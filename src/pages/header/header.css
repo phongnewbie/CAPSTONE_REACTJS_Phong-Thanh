@@ -16,3 +16,23 @@
 .header-link:hover {
   opacity: 0.6;
 }
+
+.header__nav-item--prevent::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 2px;
+  background-color: rgba(231, 231, 231, 0.311);
+  height: 18px;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header__nav-item {
+  position: relative;
+  /* color: var(--white-color);
+  padding: 0 8px;
+  font-size: 1.4rem;
+  display: flex; */
+}

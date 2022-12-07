@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { callLogin } from "../../redux/reducers/userReducer";
 import { USER_LOGIN } from "../../utils/constant";
 import "./login.css";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const {
@@ -103,7 +104,11 @@ export default function Login() {
                   span: 8,
                 }}
               >
-                <Button type="primary" htmlType="submit">
+                <span className="login-link">
+                  <NavLink to="/signup">Bạn chưa có tài khoản</NavLink> |{" "}
+                  <a href="/">trang chủ</a>
+                </span>
+                <Button className="mt-2" type="primary" htmlType="submit">
                   Đăng nhập
                 </Button>
               </Form.Item>

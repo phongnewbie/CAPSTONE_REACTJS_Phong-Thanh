@@ -1,8 +1,11 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
+import { http } from "../../utils/baseUrl";
+import { USER_LOGIN } from "../../utils/constant";
 
 const initialState = {
   danhSachPhim: [],
+  themPhim: {},
 };
 
 const phimReducer = createSlice({
@@ -12,10 +15,13 @@ const phimReducer = createSlice({
     layDanhSachFilm: (state, { type, payload }) => {
       state.danhSachPhim = payload;
     },
+    themFilm: (state, { type, payload }) => {
+      state.themPhim = payload;
+    },
   },
 });
 
-export const { layDanhSachFilm } = phimReducer.actions;
+export const { layDanhSachFilm, themFilm } = phimReducer.actions;
 export default phimReducer.reducer;
 export const callApiDanhSachPhim = () => async (dispatch) => {
   const getApiFilm = await axios({
@@ -27,4 +33,17 @@ export const callApiDanhSachPhim = () => async (dispatch) => {
     },
   });
   dispatch(layDanhSachFilm(getApiFilm.data.content));
+};
+
+export const callApiThemPhim = (data) => async (dispatch) => {
+  try {
+    const getApiThemFilm = await http.post(
+      "/QuanLyPhim/ThemPhimUploadHinh",
+      data
+    );
+    alert("Thêm phim thành công");
+    console.log("phim mới", getApiThemFilm);
+  } catch (err) {
+    alert("Không thêm phim được !");
+  }
 };

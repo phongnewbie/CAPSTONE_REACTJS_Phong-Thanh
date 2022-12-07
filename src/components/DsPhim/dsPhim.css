@@ -98,3 +98,14 @@
   padding: 10px;
   border-radius: 6px;
 }
+
+.width-center {
+  width: 100%;
+  margin: auto;
+}
+
+.slick-track {
+  /* width: 1180px !important; */
+  display: flex;
+  justify-content: center;
+}

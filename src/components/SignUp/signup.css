@@ -21,3 +21,7 @@
   border-radius: 0.5rem;
   padding: 12px;
 }
+
+.signup-link {
+  text-decoration: underline;
+}

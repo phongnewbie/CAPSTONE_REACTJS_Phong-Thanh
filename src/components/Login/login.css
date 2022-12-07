@@ -5,3 +5,11 @@
   border-radius: 6px;
   margin: auto;
 }
+
+.login-link {
+  font-size: 12px;
+}
+
+.login-link a {
+  text-decoration: underline;
+}

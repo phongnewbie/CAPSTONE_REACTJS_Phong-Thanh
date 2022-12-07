@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import styleSlick from "./multipleRowSlick.css";
+import styleDsPhim from "./dsPhim.css";
 import { history } from "../../utils/history";
 
 export default function DsPhim() {

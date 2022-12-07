@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button } from "antd";
 import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 import { callSignUp } from "../../redux/reducers/userReducer";
 import "./signup.css";
 
@@ -125,8 +126,12 @@ export default function SignUp(props) {
             ]}
           >
             <Input />
+            <div className="mt-2">
+              <NavLink to="/login" className="signup-link">
+                Bạn đã có tài khoản
+              </NavLink>
+            </div>
           </Form.Item>
-
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type="primary" htmlType="submit">
               Submit
