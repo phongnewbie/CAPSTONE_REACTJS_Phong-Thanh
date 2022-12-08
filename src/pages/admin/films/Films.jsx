@@ -4,7 +4,10 @@ import { Input, Space, Button } from "antd";
 import { AudioOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { callApiDanhSachPhim } from "../../../redux/reducers/PhimReducer.js";
+import {
+  callApiDanhSachPhim,
+  callApiXoaPhim,
+} from "../../../redux/reducers/PhimReducer.js";
 import { history } from "../../../utils/history.js";
 
 const { Search } = Input;
@@ -33,7 +36,7 @@ export default function Films() {
       console.log(err);
     }
   };
-  console.log("hihi", apiDsPhim);
+  // console.log("hihi", apiDsPhim);
 
   useEffect(() => {
     getApiPhim();
@@ -93,15 +96,30 @@ export default function Films() {
     {
       title: "Hành động",
       dataIndex: "hanhDong",
-      render: (text, fiml) => {
+      render: (text, film) => {
         return (
           <Fragment>
-            <NavLink style={{ color: "blue" }} className="mr-2" to="/">
+            <NavLink
+              key={1}
+              style={{ color: "blue" }}
+              className="mr-2"
+              to={`editfilm/${film.maPhim}`}
+            >
               <EditOutlined />{" "}
             </NavLink>
-            <NavLink style={{ color: "red" }} className="" to="/">
-              <DeleteOutlined />
-            </NavLink>
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                if (window.confirm("bạn muốn xóa phim " + film.tenPhim)) {
+                  dispatch(callApiXoaPhim(film.maPhim));
+                }
+              }}
+              key={2}
+              className=""
+              to="/"
+            >
+              <DeleteOutlined style={{ color: "red" }} />
+            </span>
           </Fragment>
         );
       },
@@ -129,7 +147,12 @@ export default function Films() {
         size="large"
         onSearch={onSearch}
       />
-      <Table columns={columns} dataSource={data} onChange={onChange} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        onChange={onChange}
+        rowKey={"maPhim"}
+      />
     </div>
   );
 }

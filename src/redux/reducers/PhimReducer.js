@@ -2,10 +2,12 @@ import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { http } from "../../utils/baseUrl";
 import { USER_LOGIN } from "../../utils/constant";
+import { history } from "../../utils/history";
 
 const initialState = {
   danhSachPhim: [],
   themPhim: {},
+  thongTinPhim: {},
 };
 
 const phimReducer = createSlice({
@@ -18,10 +20,13 @@ const phimReducer = createSlice({
     themFilm: (state, { type, payload }) => {
       state.themPhim = payload;
     },
+    thongTinPhim: (state, { type, payload }) => {
+      state.thongTinPhim = payload;
+    },
   },
 });
 
-export const { layDanhSachFilm, themFilm } = phimReducer.actions;
+export const { layDanhSachFilm, themFilm, thongTinPhim } = phimReducer.actions;
 export default phimReducer.reducer;
 export const callApiDanhSachPhim = () => async (dispatch) => {
   const getApiFilm = await axios({
@@ -42,8 +47,47 @@ export const callApiThemPhim = (data) => async (dispatch) => {
       data
     );
     alert("Thêm phim thành công");
+    history.push("/admin/films");
     console.log("phim mới", getApiThemFilm);
   } catch (err) {
     alert("Không thêm phim được !");
+  }
+};
+
+export const callApiLayThongTinPhim = (maPhim) => async (dispatch) => {
+  try {
+    const getApiLayThongTinPhim = await http.get(
+      `/QuanLyPhim/LayThongTinPhim?MaPhim=${maPhim}`
+    );
+    dispatch(thongTinPhim(getApiLayThongTinPhim.data.content));
+    // console.log(getApiLayThongTinPhim.data.content);
+  } catch (err) {
+    alert("Không Edit phim được !");
+  }
+};
+
+export const callApiCapNhatPhim = (data) => async (dispatch) => {
+  try {
+    const getApiCapNhatPhim = await http.post(
+      "/QuanLyPhim/CapNhatPhimUpload",
+      data
+    );
+    alert("Cập nhật phim thành công");
+    dispatch(layDanhSachFilm());
+    history.push("/admin/films");
+  } catch (err) {
+    alert("Không Cập nhật phim được !");
+  }
+};
+
+export const callApiXoaPhim = (maPhim) => async (dispatch) => {
+  try {
+    const getApiXoaPhim = await http.delete(
+      `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`
+    );
+    alert("Xóa phim thành công");
+    dispatch(layDanhSachFilm());
+  } catch (err) {
+    alert("Không xóa phim được !");
   }
 };

@@ -21,6 +21,7 @@ import Loading from "./components/Loading/Loading";
 import Admin from "./templates/admin/Admin";
 import Films from "./pages/admin/films/Films";
 import AddNew from "./pages/admin/addNew/AddNew";
+import EditFilm from "./pages/admin/editfilm/EditFilm";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path="/admin" element={<Admin />}>
             <Route path="films" element={<Films />} />
             <Route path="addnew" element={<AddNew />} />
+            <Route path="films/editfilm/:id" element={<EditFilm />} />
           </Route>
         </Routes>
       </HistoryRouter>
