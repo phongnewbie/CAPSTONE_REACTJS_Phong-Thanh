@@ -126,12 +126,12 @@ export default function SignUp(props) {
             ]}
           >
             <Input />
-            <div className="mt-2">
-              <NavLink to="/login" className="signup-link">
-                Bạn đã có tài khoản
-              </NavLink>
-            </div>
           </Form.Item>
+          <div className="mt-2">
+            <NavLink to="/login" className="signup-link">
+              Bạn đã có tài khoản
+            </NavLink>
+          </div>
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
             <Button type="primary" htmlType="submit">
               Submit

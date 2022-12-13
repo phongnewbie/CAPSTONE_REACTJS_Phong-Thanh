@@ -28,17 +28,21 @@ const phimReducer = createSlice({
 
 export const { layDanhSachFilm, themFilm, thongTinPhim } = phimReducer.actions;
 export default phimReducer.reducer;
-export const callApiDanhSachPhim = () => async (dispatch) => {
-  const getApiFilm = await axios({
-    method: "GET",
-    url: "https://movienew.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom=GP01",
-    headers: {
-      TokenCybersoft:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNCIsIkhldEhhblN0cmluZyI6IjI3LzA0LzIwMjMiLCJIZXRIYW5UaW1lIjoiMTY4MjU1MzYwMDAwMCIsIm5iZiI6MTY1MzU4NDQwMCwiZXhwIjoxNjgyNzAxMjAwfQ.WXYIKeb4x0tXpYflgrnKFbivOnuUdLmKcgl7Xr0MD3I",
-    },
-  });
-  dispatch(layDanhSachFilm(getApiFilm.data.content));
-};
+export const callApiDanhSachPhim =
+  (tenPhim = "") =>
+  async (dispatch) => {
+    if (tenPhim.trim() != "") {
+      const getApiFilm = await http.get(
+        `/QuanLyPhim/LayDanhSachPhim?maNhom=GP01&tenPhim=${tenPhim}`
+      );
+      dispatch(layDanhSachFilm(getApiFilm.data.content));
+    } else {
+      const getApiFilm = await http.get(
+        "/QuanLyPhim/LayDanhSachPhim?maNhom=GP01"
+      );
+      dispatch(layDanhSachFilm(getApiFilm.data.content));
+    }
+  };
 
 export const callApiThemPhim = (data) => async (dispatch) => {
   try {
@@ -48,7 +52,6 @@ export const callApiThemPhim = (data) => async (dispatch) => {
     );
     alert("Thêm phim thành công");
     history.push("/admin/films");
-    console.log("phim mới", getApiThemFilm);
   } catch (err) {
     alert("Không thêm phim được !");
   }
@@ -85,8 +88,11 @@ export const callApiXoaPhim = (maPhim) => async (dispatch) => {
     const getApiXoaPhim = await http.delete(
       `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`
     );
+    const getApiFilm = await http.get(
+      "/QuanLyPhim/LayDanhSachPhim?maNhom=GP01"
+    );
     alert("Xóa phim thành công");
-    dispatch(layDanhSachFilm());
+    dispatch(layDanhSachFilm(getApiFilm.data.content));
   } catch (err) {
     alert("Không xóa phim được !");
   }

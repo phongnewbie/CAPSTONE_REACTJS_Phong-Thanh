@@ -8,6 +8,7 @@ import thongTinHeThongRap from "./reducers/thongTinHeThongRap";
 import quanLyDatVeReducer from "./reducers/quanLyDatVeReducer";
 import datVeReducer from "./reducers/datVeReducer";
 import LoadingReducer from "./reducers/LoadingReducer";
+import quanLyNguoiDungReducer from "./reducers/quanLyNguoiDungReducer";
 export const store = configureStore({
   reducer: {
     bannerReducer,
@@ -18,6 +19,7 @@ export const store = configureStore({
     quanLyDatVeReducer,
     datVeReducer,
     LoadingReducer,
+    quanLyNguoiDungReducer,
   },
 });
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DesktopOutlined,
   FileOutlined,
@@ -7,7 +7,11 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, redirect, useNavigate } from "react-router-dom";
+import { USER_LOGIN } from "../../utils/constant";
+import { history } from "../../utils/history";
+import { useDispatch, useSelector } from "react-redux";
+import { getThongTinNguoiDung } from "../../redux/reducers/quanLyNguoiDungReducer";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -18,27 +22,58 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
   //   <NavLink to="/films"></NavLink>,
   // getItem(<NavLink to="films">Quản lý phim</NavLink>, <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
   getItem("Phim", "sub1", <UserOutlined />, [
     getItem(<NavLink to="films">Quản lý phim</NavLink>),
     getItem(<NavLink to="addnew">Thêm phim</NavLink>),
-    getItem("Alex", "5"),
   ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
+  getItem("User", "sub2", <UserOutlined />, [
+    getItem(<NavLink to="quanly">Quản lý người dùng</NavLink>),
+    getItem(<NavLink to="adduser">Thêm người dùng</NavLink>),
   ]),
-  getItem("Files", "9", <FileOutlined />),
 ];
 
 export default function Admin() {
+  const navigate = useNavigate();
+  let dispatch = useDispatch();
+
   const [collapsed, setCollapsed] = useState(false);
-  //   const {
-  //     token: { colorBgContainer },
-  //   } = theme.useToken();
+  const apiNguoiDung = useSelector(
+    (state) => state.quanLyNguoiDungReducer.dataNguoiDung
+  );
+
+  const getApiPhim = async () => {
+    try {
+      dispatch(getThongTinNguoiDung());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getApiPhim();
+  }, []);
+
+  const onCollapse = (collapsed) => {
+    setCollapsed(collapsed);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
+  if (!localStorage.getItem(USER_LOGIN)) {
+    alert("Bạn không có quyền truy cập trang này");
+    navigate("/");
+  }
+
+  if (apiNguoiDung?.maLoaiNguoiDung === "KhachHang") {
+    alert("Bạn không có quyền truy cập trang này");
+    navigate("/");
+  }
 
   return (
     <Layout

@@ -9,10 +9,12 @@ import {
 } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
-  callApiDanhSachPhim,
-  callApiXoaPhim,
-} from "../../../redux/reducers/PhimReducer.js";
+  getDsNguoiDung,
+  callApiXoaNguoiDung,
+  getEditUser,
+} from "../../../redux/reducers/quanLyNguoiDungReducer";
 import { history } from "../../../utils/history.js";
 
 const { Search } = Input;
@@ -29,22 +31,23 @@ const onChange = (pagination, filters, sorter, extra) => {
   console.log("params", pagination, filters, sorter, extra);
 };
 
-export default function Films() {
-  const apiDsPhim = useSelector((state) => state.PhimReducer.danhSachPhim);
+export default function QuanLyUser() {
+  const apiDsNguoiDung = useSelector(
+    (state) => state.quanLyNguoiDungReducer.dsNguoiDung
+  );
   let dispatch = useDispatch();
 
   const onSearch = (value) => {
-    dispatch(callApiDanhSachPhim(value));
+    dispatch(getDsNguoiDung(value));
   };
 
   const getApiPhim = async () => {
     try {
-      dispatch(callApiDanhSachPhim());
+      dispatch(getDsNguoiDung());
     } catch (err) {
       console.log(err);
     }
   };
-  // console.log("hihi", apiDsPhim);
 
   useEffect(() => {
     getApiPhim();
@@ -52,74 +55,61 @@ export default function Films() {
 
   const columns = [
     {
-      title: "Mã phim",
-      dataIndex: "maPhim",
-      width: 150,
+      title: "Tài khoản",
+      dataIndex: "taiKhoan",
+      width: 200,
       // value: (text, object) => {
       //   return <span>{text}</span>;
       // },
-
-      onFilter: (value, record) => record.maPhim.indexOf(value) === 0,
-      sorter: (a, b) => a.maPhim - b.maPhim,
+    },
+    {
+      title: "Họ tên",
+      dataIndex: "hoTen",
+      width: 200,
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: 300,
+      render: (text, user) => {
+        return (
+          <Fragment>
+            {user.email.length > 30
+              ? user.email.substr(0, 30) + "..."
+              : user.email}
+          </Fragment>
+        );
+      },
+    },
+    {
+      title: "Loại người dùng",
+      dataIndex: "maLoaiNguoiDung",
+      onFilter: (value, record) => record.maLoaiNguoiDung.includes(value),
+      sorter: (a, b) => a.maLoaiNguoiDung.length - b.maLoaiNguoiDung.length,
       sortDirections: ["descend"],
-    },
-    {
-      title: "Hình ảnh",
-      dataIndex: "hinhAnh",
-      // value: "descend",
-      // sorter: (a, b) => a.hinhAnh - b.hinhAnh,
-      render: (text, films, index) => {
-        return (
-          <Fragment>
-            <img
-              onError={(e) => {
-                e.target.onError = null;
-                e.target.src = `https://picsum.photos/id/${index}/50`;
-              }}
-              width={50}
-              src={films.hinhAnh}
-              alt={films.tenPhim}
-            />
-          </Fragment>
-        );
-      },
-    },
-    {
-      title: "Tên phim",
-      dataIndex: "tenPhim",
-    },
-    {
-      title: "Mô tả",
-      dataIndex: "moTa",
-      render: (text, fimls) => {
-        return (
-          <Fragment>
-            {fimls.moTa.length > 50
-              ? fimls.moTa.substr(0, 50) + "..."
-              : fimls.moTa}
-          </Fragment>
-        );
-      },
     },
     {
       title: "Hành động",
       dataIndex: "hanhDong",
-      render: (text, film) => {
+      render: (text, user) => {
         return (
           <Fragment>
             <NavLink
               key={1}
               style={{ color: "blue" }}
               className="mr-2"
-              to={`editfilm/${film.maPhim}`}
+              to={`edituser/${user.taiKhoan}`}
+              onClick={() => {
+                dispatch(getEditUser());
+              }}
             >
               <EditOutlined />{" "}
             </NavLink>
             <span
               style={{ cursor: "pointer" }}
               onClick={() => {
-                if (window.confirm("bạn muốn xóa phim " + film.tenPhim)) {
-                  dispatch(callApiXoaPhim(film.maPhim));
+                if (window.confirm("bạn muốn xóa phim " + user.taiKhoan)) {
+                  dispatch(callApiXoaNguoiDung(user.taiKhoan));
                 }
               }}
               key={2}
@@ -128,39 +118,28 @@ export default function Films() {
             >
               <DeleteOutlined style={{ color: "red" }} />
             </span>
-            <NavLink
-              key={1}
-              style={{ color: "green" }}
-              className="ml-2"
-              to={`showtime/${film.maPhim}/${film.tenPhim}`}
-              onClick={() => {
-                localStorage.setItem("filmParams", JSON.stringify(film));
-              }}
-            >
-              <CalendarOutlined />{" "}
-            </NavLink>
           </Fragment>
         );
       },
     },
   ];
 
-  const data = apiDsPhim;
+  const data = apiDsNguoiDung;
 
   return (
     <div className="container">
-      <h3 className="mb-4">Quản lý phim</h3>
+      <h3 className="mb-4">Quản lý người dùng</h3>
       <Button
         onClick={() => {
-          history.push("/admin/addnew");
+          history.push("/admin/adduser");
         }}
         className="mb-3"
       >
-        Thêm phim
+        Thêm người dùng
       </Button>
       <Search
         className="mb-3"
-        placeholder="input search text"
+        placeholder="tìm kiếm người dùng"
         allowClear
         enterButton="Tìm kiếm"
         size="large"
@@ -170,7 +149,7 @@ export default function Films() {
         columns={columns}
         dataSource={data}
         onChange={onChange}
-        rowKey={"maPhim"}
+        rowKey={"taiKhoan"}
       />
     </div>
   );

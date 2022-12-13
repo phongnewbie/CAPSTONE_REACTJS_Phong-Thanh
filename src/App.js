@@ -22,6 +22,10 @@ import Admin from "./templates/admin/Admin";
 import Films from "./pages/admin/films/Films";
 import AddNew from "./pages/admin/addNew/AddNew";
 import EditFilm from "./pages/admin/editfilm/EditFilm";
+import ShowTime from "./pages/admin/showtime/ShowTime";
+import QuanLyUser from "./pages/admin/quanLyUser/QuanLyUser";
+import AddUser from "./pages/admin/addUser/AddUser";
+import EditUser from "./pages/admin/editUser/EditUser";
 
 function App() {
   return (
@@ -43,6 +47,10 @@ function App() {
             <Route path="films" element={<Films />} />
             <Route path="addnew" element={<AddNew />} />
             <Route path="films/editfilm/:id" element={<EditFilm />} />
+            <Route path="films/showtime/:id/:tenPhim" element={<ShowTime />} />
+            <Route path="quanly" element={<QuanLyUser />} />
+            <Route path="adduser" element={<AddUser />} />
+            <Route path="quanly/edituser/:id" element={<EditUser />} />
           </Route>
         </Routes>
       </HistoryRouter>
