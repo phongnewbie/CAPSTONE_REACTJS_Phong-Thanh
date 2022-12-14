@@ -5,6 +5,7 @@ import { history } from "../../utils/history";
 const initialState = {
   dataNguoiDung: [],
   dsNguoiDung: [],
+  thongTinNguoiDung: {},
 };
 
 const quanLyNguoiDungReducer = createSlice({
@@ -21,10 +22,15 @@ const quanLyNguoiDungReducer = createSlice({
         state.dsNguoiDung = payload;
       }
     },
+    layThongTinNguoiDung: (state, { type, payload }) => {
+      {
+        state.thongTinNguoiDung = payload;
+      }
+    },
   },
 });
 
-export const { layDataNguoiDung, laydsNguoiDung } =
+export const { layDataNguoiDung, laydsNguoiDung, layThongTinNguoiDung } =
   quanLyNguoiDungReducer.actions;
 
 export default quanLyNguoiDungReducer.reducer;
@@ -34,12 +40,23 @@ export const getThongTinNguoiDung = () => async (dispatch) => {
   dispatch(layDataNguoiDung(getApiNguoiDung.data.content));
 };
 
-export const getEditUser = () => async (dispatch) => {
+export const getInfoUser = (taiKhoan) => async (dispatch) => {
+  const getApiThongTinNguoiDung = await http.post(
+    `/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${taiKhoan}`
+  );
+  dispatch(layThongTinNguoiDung(getApiThongTinNguoiDung.data.content));
+};
+
+export const getEditUser = (taiKhoan) => async (dispatch) => {
   try {
     const getApiEditUser = await http.post(
-      "/QuanLyNguoiDung/CapNhatThongTinNguoiDung"
+      "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      taiKhoan
     );
-    dispatch(layDataNguoiDung(getApiEditUser.data.content));
+    console.log("ok", getApiEditUser.data.content);
+    alert("Cập nhật thành công");
+    history.push("/admin/quanly");
+    dispatch(layThongTinNguoiDung());
   } catch (err) {
     console.log(err.response?.data.content);
   }

@@ -46,9 +46,10 @@ export const callSignUp = (userSignUp) => async (dispatch) => {
     // console.log(apiSignUp);
 
     // đẩy qua trang login
+    alert("Đăng ký thành công");
     history.push("/login");
   } catch (err) {
-    alert("Không đăng ký được !");
+    alert(err.response?.data.content);
   }
 };
 

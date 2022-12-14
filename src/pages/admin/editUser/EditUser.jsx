@@ -1,15 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Input, Select, Button } from "antd";
-import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { callSignUp } from "../../../redux/reducers/quanLyNguoiDungReducer";
+import {
+  callSignUp,
+  getInfoUser,
+  getEditUser,
+} from "../../../redux/reducers/quanLyNguoiDungReducer";
+import { useParams } from "react-router-dom";
 
 export default function EditUser(props) {
   const dispatch = useDispatch();
+  const params = useParams();
 
-  const onFinish = (values) => {
-    dispatch(callSignUp(values));
-    console.log(values);
+  const apiThongTinNguoiDung = useSelector(
+    (state) => state.quanLyNguoiDungReducer.thongTinNguoiDung
+  );
+  console.log("info", apiThongTinNguoiDung);
+
+  const getApiInfoUser = async () => {
+    try {
+      dispatch(getInfoUser(params.id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getApiInfoUser();
+  }, [params.id]);
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      taiKhoan: apiThongTinNguoiDung.taiKhoan,
+      matKhau: apiThongTinNguoiDung.matKhau,
+      email: apiThongTinNguoiDung.email,
+      soDT: apiThongTinNguoiDung.soDT,
+      maLoaiNguoiDung: apiThongTinNguoiDung.maLoaiNguoiDung,
+      hoTen: apiThongTinNguoiDung.hoTen,
+      maNhom: apiThongTinNguoiDung.maNhom,
+    },
+    onSubmit: (values) => {
+      console.log("value", values);
+      values.loaiNguoiDung = {
+        maLoaiNguoiDung: apiThongTinNguoiDung.maLoaiNguoiDung,
+        tenLoai: apiThongTinNguoiDung.loaiNguoiDung.tenLoai,
+      };
+      dispatch(getEditUser(values));
+    },
+  });
+
+  const handleChangOption = (name) => {
+    return (value) => {
+      formik.setFieldValue(name, value);
+    };
   };
 
   const layout = {
@@ -23,9 +69,14 @@ export default function EditUser(props) {
     <div style={{ width: "600px" }} className="container">
       <h2 className="text-center mb-5">Cập nhật người dùng</h2>
 
-      <Form {...layout} name="register" onFinish={onFinish}>
+      <Form
+        {...layout}
+        name="register"
+        //  onFinish={onFinish}
+
+        onSubmitCapture={formik.handleSubmit}
+      >
         <Form.Item
-          name="taiKhoan"
           label="Tài Khoản"
           rules={[
             {
@@ -34,10 +85,14 @@ export default function EditUser(props) {
             },
           ]}
         >
-          <Input />
+          <Input
+            disabled={true}
+            name="taiKhoan"
+            onChange={formik.handleChange}
+            value={formik.values.taiKhoan}
+          />
         </Form.Item>
         <Form.Item
-          name="matKhau"
           label="Mật khẩu"
           rules={[
             {
@@ -47,51 +102,30 @@ export default function EditUser(props) {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input
+            name="matKhau"
+            onChange={formik.handleChange}
+            value={formik.values.matKhau}
+          />
         </Form.Item>
 
         <Form.Item
-          name="matKhau"
-          label="Nhập lại mật khẩu"
-          dependencies={["matKhau"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Mật khẩu không khớp!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("matKhau") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Mật khẩu không khớp!"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
           label="E-mail"
           rules={[
-            // {
-            //   type: "email",
-            //   message: "Email không đúng định dạng !",
-            // },
             {
               required: true,
               message: "Hãy nhập Email !",
             },
           ]}
         >
-          <Input />
+          <Input
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
         </Form.Item>
 
         <Form.Item
-          name="soDt"
           label="Điện thoại"
           rules={[
             {
@@ -100,11 +134,14 @@ export default function EditUser(props) {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="soDT"
+            onChange={formik.handleChange}
+            value={formik.values.soDT}
+          />
         </Form.Item>
 
         <Form.Item
-          name="maNhom"
           label="Mã nhóm"
           rules={[
             {
@@ -113,23 +150,30 @@ export default function EditUser(props) {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="maNhom"
+            onChange={formik.handleChange}
+            value={formik.values.maNhom}
+          />
         </Form.Item>
 
         <Form.Item
-          name="maLoaiNguoiDung"
           label="Loại người dùng"
           hasFeedback
           rules={[{ required: true, message: "Please select your country!" }]}
         >
-          <Select placeholder="Hãy chọn loại người dùng">
+          <Select
+            name="maLoaiNguoiDung"
+            onChange={handleChangOption("maLoaiNguoiDung")}
+            value={formik.values.maLoaiNguoiDung}
+            placeholder="Hãy chọn loại người dùng"
+          >
             <Option value="KhachHang">khác hàng</Option>
             <Option value="QuanTri">Quản trị</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
-          name="hoTen"
           label="Họ tên"
           rules={[
             {
@@ -138,12 +182,16 @@ export default function EditUser(props) {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="hoTen"
+            onChange={formik.handleChange}
+            value={formik.values.hoTen}
+          />
         </Form.Item>
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Cập nhật
           </Button>
         </Form.Item>
       </Form>

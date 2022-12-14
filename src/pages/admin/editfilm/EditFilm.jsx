@@ -57,7 +57,6 @@ export default function EditFilm() {
       sapChieu: apiThongTinPhim.sapChieu,
       hot: apiThongTinPhim.hot,
       danhGia: apiThongTinPhim.danhGia,
-      // maNhom: "GP00",
       hinhAnh: null,
     },
     onSubmit: (values) => {
@@ -137,6 +136,7 @@ export default function EditFilm() {
         </Form.Item>
         <Form.Item label="Tên phim">
           <Input
+            disabled={false}
             name="tenPhim"
             onChange={formik.handleChange}
             value={formik.values.tenPhim}
