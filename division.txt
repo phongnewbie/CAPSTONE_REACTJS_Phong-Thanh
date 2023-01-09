@@ -1,0 +1,9 @@
+-Ngô thanh phong: 
++ trang home:  giao diện home teamplate, carousel,load danh sách phim
++ trang admin: load danh sách user, search user , thêm user, xóa user , edit user
+-Huỳnh Tấn Thành: 
++ trang home: load danh sách đặt vé , dao diện footer, trang đặt vé teamplate
++ trang admin: load danh sách phim, search phim, edit phim , thêm phim, xóa phim
+-Huỳnh Minh Hoàng:
++ trang home: xây dụng trang chi tiết phim, trang đăng kí ,đăng nhập
++ trang admin: chức năng tạo lich chiếu
