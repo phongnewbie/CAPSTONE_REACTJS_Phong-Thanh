@@ -52,22 +52,17 @@ export default function Footer() {
                 </li>
                 <li className="footer__item">
                   <a href="" className="footer__link">
-                    Shopee Blog
+                    CGV Blog
                   </a>
                 </li>
                 <li className="footer__item">
                   <a href="" className="footer__link">
-                    Shopee Mall
+                    CGV Mall
                   </a>
                 </li>
                 <li className="footer__item">
                   <a href="" className="footer__link">
-                    Hướng Dẫn Mua Hàng
-                  </a>
-                </li>
-                <li className="footer__item">
-                  <a href="" className="footer__link">
-                    Hướng Dẫn Bán Hàng
+                    Hướng Dẫn đặt vé
                   </a>
                 </li>
               </ul>

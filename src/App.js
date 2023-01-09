@@ -26,6 +26,7 @@ import ShowTime from "./pages/admin/showtime/ShowTime";
 import QuanLyUser from "./pages/admin/quanLyUser/QuanLyUser";
 import AddUser from "./pages/admin/addUser/AddUser";
 import EditUser from "./pages/admin/editUser/EditUser";
+import UpDateUser from "./components/Login/UpDateUser";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/" element={<TrangChu />} />
             <Route path="/chitietphim/:id" element={<ChiTiepPhim />} />
             <Route path="info" element={<InfoUser />} />
+            <Route path="update" element={<UpDateUser />} />
           </Route>
           <Route>
             <Route path="signup" element={<SignUp />} />

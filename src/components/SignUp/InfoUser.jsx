@@ -11,7 +11,6 @@ import "./SignUp";
 export default function () {
   let dispatch = useDispatch();
   let infoUser = useSelector((state) => state.userReducer.infoUser);
-  // console.log(infoUser);
 
   let userLocalStorage = getStringLocal(USER_LOGIN);
 
@@ -32,7 +31,6 @@ export default function () {
             }}
             className="card signup-warp"
           >
-            <img className="card-img-top" src="holder.js/100x180/" alt />
             <div className="card-body row">
               <div className="col-6">
                 <h4 className="card-title">Họ tên: {infoUser.hoTen}</h4>
@@ -43,14 +41,15 @@ export default function () {
                 <h4 className="card-title">Email: {infoUser.email}</h4>
                 <h4 className="card-title">Số điện thoại: {infoUser.soDT}</h4>
               </div>
-              {/* <NavLink
-                style={{ width: "100%" }}
-                className="text-right mr-5"
-                to="/update"
+              <div
+                style={{ width: "100%", marginRight: "100px" }}
+                className="text-right"
               >
-                {" "}
-                cập nhật thông tin tài khoản{" "}
-              </NavLink> */}
+                <NavLink style={{ width: "100%" }} to="/update">
+                  {" "}
+                  cập nhật thông tin tài khoản{" "}
+                </NavLink>
+              </div>
               <div className="row w-full">
                 <div className="col-12">
                   <h4 style={{ padding: "15px" }}>Lịch sử đặt vé</h4>

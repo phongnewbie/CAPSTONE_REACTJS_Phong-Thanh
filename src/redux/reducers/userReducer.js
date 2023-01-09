@@ -10,6 +10,7 @@ import { USER_LOGIN } from "../../utils/constant";
 
 const initialState = {
   infoUser: {},
+  updateUser: {},
 };
 
 const userReducer = createSlice({
@@ -19,10 +20,13 @@ const userReducer = createSlice({
     getProfile: (state, { type, payload }) => {
       state.infoUser = payload;
     },
+    getUpdateUser: (state, { type, payload }) => {
+      state.updateUser = payload;
+    },
   },
 });
 
-export const { getProfile } = userReducer.actions;
+export const { getProfile, getUpdateUser } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -64,5 +68,21 @@ export const callLogin = (userLogin) => async (dispatch) => {
     return new Promise((resolve, reject) =>
       resolve({ isError: true, message: err.response.data.content })
     );
+  }
+};
+
+export const callUpdateUser = (value) => async (dispatch) => {
+  try {
+    const apiUpdateUser = await http.put(
+      "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      value
+    );
+
+    console.log(apiUpdateUser.data.content);
+    dispatch(getUpdateUser(apiUpdateUser.data.content));
+    alert("Cập nhật thành công");
+    history.push("/info");
+  } catch (err) {
+    console.log(err.response?.data.content);
   }
 };

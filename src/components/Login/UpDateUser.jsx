@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button } from "antd";
-import { useDispatch } from "react-redux";
 import { callGetProfile } from "../../redux/reducers/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import { callUpdateUser } from "../../redux/reducers/userReducer";
 
 export default function UpDateUser() {
   const dispatch = useDispatch();
+  const infoUser = useSelector((state) => state.userReducer.infoUser);
+  console.log(infoUser);
 
   const onFinish = (values) => {
     dispatch(callGetProfile(values));
@@ -16,12 +20,37 @@ export default function UpDateUser() {
     wrapperCol: { span: 16 },
   };
 
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      taiKhoan: infoUser.taiKhoan,
+      matKhau: infoUser.matKhau,
+      email: infoUser.email,
+      soDT: infoUser.soDT,
+      maLoaiNguoiDung: infoUser.maLoaiNguoiDung,
+      hoTen: infoUser.hoTen,
+      maNhom: infoUser.maNhom,
+    },
+    onSubmit: (values) => {
+      console.log("value", values);
+
+      dispatch(callUpdateUser(values));
+    },
+  });
+
+  const handleChangOption = (name) => {
+    return (value) => {
+      formik.setFieldValue(name, value);
+    };
+  };
+
+  const { Option } = Select;
+
   return (
     <div style={{ width: "600px" }} className="container mt-5">
       <h2 className="text-center mb-5">Cập nhật thông tin</h2>
-      <Form {...layout} name="register" onFinish={onFinish}>
+      <Form {...layout} name="register" onSubmitCapture={formik.handleSubmit}>
         <Form.Item
-          name="taiKhoan"
           label="Tài Khoản"
           rules={[
             {
@@ -30,10 +59,13 @@ export default function UpDateUser() {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="taiKhoan"
+            onChange={formik.handleChange}
+            value={formik.values.taiKhoan}
+          />
         </Form.Item>
         <Form.Item
-          name="matKhau"
           label="Mật khẩu"
           rules={[
             {
@@ -43,34 +75,14 @@ export default function UpDateUser() {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password
+            name="matKhau"
+            onChange={formik.handleChange}
+            value={formik.values.matKhau}
+          />
         </Form.Item>
 
         <Form.Item
-          name="matKhau"
-          label="Nhập lại mật khẩu"
-          dependencies={["matKhau"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Mật khẩu không khớp!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("matKhau") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Mật khẩu không khớp!"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
           label="E-mail"
           rules={[
             {
@@ -83,11 +95,14 @@ export default function UpDateUser() {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+          />
         </Form.Item>
 
         <Form.Item
-          name="soDt"
           label="Điện thoại"
           rules={[
             {
@@ -96,11 +111,14 @@ export default function UpDateUser() {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="soDT"
+            onChange={formik.handleChange}
+            value={formik.values.soDT}
+          />
         </Form.Item>
 
         <Form.Item
-          name="maNhom"
           label="Mã nhóm"
           rules={[
             {
@@ -109,11 +127,30 @@ export default function UpDateUser() {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="maNhom"
+            onChange={formik.handleChange}
+            value={formik.values.maNhom}
+          />
         </Form.Item>
 
         <Form.Item
-          name="hoTen"
+          label="Loại người dùng"
+          hasFeedback
+          rules={[{ required: true, message: "Please select your country!" }]}
+        >
+          <Select
+            name="maLoaiNguoiDung"
+            onChange={handleChangOption("maLoaiNguoiDung")}
+            value={formik.values.maLoaiNguoiDung}
+            placeholder="Hãy chọn loại người dùng"
+          >
+            <Option value="KhachHang">khác hàng</Option>
+            <Option value="QuanTri">Quản trị</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
           label="Họ tên"
           rules={[
             {
@@ -122,10 +159,16 @@ export default function UpDateUser() {
             },
           ]}
         >
-          <Input />
+          <Input
+            name="hoTen"
+            onChange={formik.handleChange}
+            value={formik.values.hoTen}
+          />
         </Form.Item>
 
-        <button className="btn btn-primary mx-2">Sửa</button>
+        <Button type="primary" htmlType="submit">
+          Cập nhật
+        </Button>
       </Form>
     </div>
   );
