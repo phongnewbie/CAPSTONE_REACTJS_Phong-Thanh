@@ -89,7 +89,7 @@ export const callApiXoaPhim = (maPhim) => async (dispatch) => {
       `/QuanLyPhim/XoaPhim?MaPhim=${maPhim}`
     );
     const getApiFilm = await http.get(
-      "/QuanLyPhim/LayDanhSachPhim?maNhom=GP01"
+      "/QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
     );
     alert("Xóa phim thành công");
     dispatch(layDanhSachFilm(getApiFilm.data.content));
