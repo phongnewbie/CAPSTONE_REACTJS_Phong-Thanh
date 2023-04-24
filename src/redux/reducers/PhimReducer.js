@@ -33,12 +33,12 @@ export const callApiDanhSachPhim =
   async (dispatch) => {
     if (tenPhim.trim() != "") {
       const getApiFilm = await http.get(
-        `/QuanLyPhim/LayDanhSachPhim?maNhom=GP01&tenPhim=${tenPhim}`
+        `/QuanLyPhim/LayDanhSachPhim?maNhom=GP00&tenPhim=${tenPhim}`
       );
       dispatch(layDanhSachFilm(getApiFilm.data.content));
     } else {
       const getApiFilm = await http.get(
-        "/QuanLyPhim/LayDanhSachPhim?maNhom=GP01"
+        "/QuanLyPhim/LayDanhSachPhim?maNhom=GP00"
       );
       dispatch(layDanhSachFilm(getApiFilm.data.content));
     }
